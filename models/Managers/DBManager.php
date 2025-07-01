@@ -4,14 +4,15 @@
  * Class allowing connection to the database.
  * Singleton class instantiated by getInstance()
  */
+class DBManager
+{
 
-class DBManager {
+    private static DBManager $instance;
 
-    private static $instance;
+    private PDO $connection;
 
-    private $connection;
-
-    private function __construct() {
+    private function __construct()
+    {
         $this->connection = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -21,7 +22,7 @@ class DBManager {
      * Instantiates the DBManager class
      * @return DBManager
      */
-    public static function getInstance() : DBManager
+    public static function getInstance(): DBManager
     {
         if (!isset(self::$instance)) {
             self::$instance = new DBManager();
@@ -33,7 +34,7 @@ class DBManager {
      *
      * @return PDO
      */
-    public function getConnection() : PDO
+    public function getConnection(): PDO
     {
         return $this->connection;
     }
@@ -43,7 +44,7 @@ class DBManager {
      * @param array|null $params
      * @return PDOStatement
      */
-    public function query(string $sql, ?array $params = null) : PDOStatement
+    public function query(string $sql, ?array $params = null): PDOStatement
     {
         if ($params == null) {
             $query = $this->connection->query($sql);
