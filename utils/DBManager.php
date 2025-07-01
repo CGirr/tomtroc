@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Class allowing connection to the database.
- * Singleton class instantiated by getInstance()
+ * Class managing connection to the database and executing queries
+ *
  */
 class DBManager
 {
@@ -31,7 +31,7 @@ class DBManager
     }
 
     /**
-     *
+     * Get the PDO connection
      * @return PDO
      */
     public function getConnection(): PDO

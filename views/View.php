@@ -3,7 +3,6 @@
 /**
  * This class generates views based on parameters sent from controller
  */
-
 class View
 {
     /** Page's title
