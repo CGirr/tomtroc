@@ -15,12 +15,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <nav>
-
+        <nav class="header-nav inter-text inter">
+            <div class="nav-container">
+                <div>
+                    <img src="./images/logo.png" alt="logo de TomTroc" class="header-logo">
+                </div>
+                <div class="nav-block-1">
+                    <a href="#" class="nav-link-1">Accueil</a>
+                    <a href="#">Nos livres à l'échange</a>
+                </div>
+                <div class="nav-block-2">
+                    <a href="#" class="nav-link-2"><img src="./images/message_icon.png" alt="Icône de messagerie" class="i-message">Messagerie</a>
+                    <a href="#" class="nav-link-2"><img src="./images/my_account_icon.png" alt="Icône de messagerie" class="i-my-account">Mon compte</a>
+                    <a href="#">Connexion</a>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -29,7 +45,14 @@
     </main>
 
     <footer>
-
+        <nav class="footer-nav inter-text inter">
+            <div class="footer-container">
+                <a href="#">Politique de confidentialité</a>
+                <a href="#">Mentions légales</a>
+                <a href="#">Tom Troc&copy;</a>
+                <img src="./images/tt.png" alt="logo TT"
+            </div>
+        </nav>
     </footer>
 
 </body>

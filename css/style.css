@@ -1,1 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+:root {
+    --backgroundColor: rgba(245, 243, 239, 1);
+    --greyTextColor: rgba(166, 166, 166, 1);
+}
+
+.inter-text {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.header-nav {
+    padding: 15px 0px 15px 150px;
+    background-color: var(--backgroundColor)
+}
+
+.header-logo {
+    height: 51px;
+    width: 155px;
+}
+
+.header-nav a, .footer-nav a {
+    text-decoration: none;
+    color: #292929;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.i-message {
+    width: 15px;
+    height: 13px;
+    margin-right: 3px;
+    vertical-align: middle;
+}
+
+.i-my-account {
+    width: 10px;
+    height: 13px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.nav-block-1 {
+    margin-left: 78px;
+    margin-right: 150px;
+}
+
+.nav-link-1 {
+    margin-right: 40px;
+}
+
+.nav-block-2 {
+    margin-left: 58px;
+    padding-left: 58px;
+    border-left: 1px solid rgba(166, 166, 166, 0.2);
+}
+
+.nav-link-2 {
+    margin-right: 58px;
+}
+
+.footer-nav {
+    background-color: white;
+}
+
+.footer-nav img {
+    width: 22px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: end;
+    gap: 40px;
+    padding-right: 46px;
+}
+
+
+
 
