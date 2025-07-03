@@ -12,12 +12,51 @@ body {
 :root {
     --backgroundColor: rgba(245, 243, 239, 1);
     --greyTextColor: rgba(166, 166, 166, 1);
+    --greenButtonColor: rgba(0, 172, 102, 1);
+    --darkGreyText: rgba(41, 41, 41, 1);
 }
 
 .inter-text {
     font-family: "Inter", sans-serif;
     font-weight: 400;
     font-size: 14px;
+}
+
+.inter-italic-text {
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--greyTextColor);
+}
+
+.dark-grey-text {
+    color: var(--darkGreyText);
+}
+
+.button-text {
+    font-family: "Inter";
+    font-size: 16px;
+    font-weight: 600;
+}
+
+h1 {
+    font-family: "Playfair Display";
+    font-weight: 400;
+    font-size: 36px;
+}
+
+h2 {
+    font-family: "Playfair Display";
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--darkGreyText);
+}
+
+p {
+    font-family: "Inter";
+    font-weight: 300;
+    font-size: 16px;
 }
 
 .header-nav {
@@ -32,7 +71,7 @@ body {
 
 .header-nav a, .footer-nav a {
     text-decoration: none;
-    color: #292929;
+    color: var(--darkGreyText);
 }
 
 .nav-container {
@@ -75,6 +114,7 @@ body {
 
 .footer-nav {
     background-color: white;
+    padding: 23px 46px;
 }
 
 .footer-nav img {
@@ -85,9 +125,139 @@ body {
     display: flex;
     justify-content: end;
     gap: 40px;
-    padding-right: 46px;
 }
 
+.flex-container {
+    display: flex;
+    gap: 100px;
+    height: 539px;
+}
 
+.accueil {
+    display: flex;
+    background-color: var(--backgroundColor);
+    padding: 80px 310px 128px 292px;
+    gap: 105px;
+}
 
+.accueil img {
+    width: 404px;
+}
 
+.accueil > .container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.last-added-section {
+    background-color: white;
+    padding: 80px 263px 64px 263px;
+}
+
+.last-added-section > .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+}
+
+.how-to-section {
+    background-color: var(--backgroundColor);
+    padding: 80px 236px 80px 236px;
+}
+
+.how-to-section h2 {
+    margin-bottom: 24px;
+}
+
+.how-to-section p {
+    margin-bottom: 40px;
+    width: 397px;
+    text-align: center;
+}
+
+.how-to-section > .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-how-to-cards {
+    display: flex;
+    gap: 36px;
+    height: 139px;
+    justify-content: space-between;
+}
+
+.how-to-card {
+    background-color: white;
+    padding: 44px 18px;
+    border-radius: 10px;
+    height: 139px;
+    width: 215px;
+    text-align: center;
+}
+
+.clay-img {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.values {
+    background-color: var(--backgroundColor);
+    padding-top: 70px;
+}
+
+.values > .container {
+    width: 392px;
+    margin: auto;
+    position: relative;
+    text-align: left;
+}
+
+.values h2 {
+    margin-bottom: 25px;
+}
+
+.values p {
+    margin-bottom: 20px;
+}
+
+.values span {
+    margin-top: 10px;
+}
+
+.span-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.span-container img {
+    width: 120px;
+    margin-right: -75px;
+    padding-bottom: 85px;
+}
+
+figcaption {
+    float: right;
+}
+
+.green-button {
+    color: white;
+    background-color: var(--greenButtonColor);
+    border: transparent;
+    border-radius: 10px;
+    padding: 22px 38px 22px 38px;
+}
+
+.dark-grey-button {
+    color: var(--greenButtonColor);
+    border: 1px solid var(--greenButtonColor);
+    border-radius: 10px;
+    padding: 22px 38px 22px 38px;
+    margin-top: 48px;
+}
