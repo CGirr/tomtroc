@@ -27,7 +27,7 @@ class Helpers {
      */
     public static function sanitize(string $data) : string
     {
-        return htmlspecialchars(trim($data, ENT_QUOTES, 'UTF-8'));
+        return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
     }
 
     /**
@@ -36,7 +36,7 @@ class Helpers {
      * @param string $method
      * @return mixed
      */
-    public static function request(string $key, mixed $default = null, string $method = 'both') : mixed
+    public static function request(mixed $key, mixed $default = null, string $method = 'both') : mixed
     {
         switch(strtolower($method)) {
             case 'get':

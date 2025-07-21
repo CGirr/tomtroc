@@ -29,9 +29,17 @@ class UserController
     public function showAccount() : void
     {
         Helpers::checkIfUserIsConnected();
+        $id = Helpers::request("id", null);
+
+        $userManager = ManagerFactory::getUserManager();
+        var_dump($_SESSION['user']);
+
+        $user = $userManager->findUserById($_SESSION['user']['id']);
+
+        var_dump($user);
 
         $view = new View('Mon compte');
-        $view->render("myAccount");
+        $view->render("myAccount", ["user" => $user]);
     }
 
     /**
@@ -56,8 +64,7 @@ class UserController
             "password" => $hashedPassword
         ]);
 
-        $db = DBManager::getInstance()->getConnection();
-        $userManager = new UserManager($db);
+        $userManager = ManagerFactory::getUserManager();
 
         // Checks if login or email is already used
         if ($userManager->emailOrLoginExists($email, $login)) {
@@ -87,8 +94,7 @@ class UserController
             throw new Exception("Tous les champs sont obligatoires");
         }
 
-        $db = DBManager::getInstance()->getConnection();
-        $userManager = new UserManager($db);
+        $userManager = ManagerFactory::getUserManager();
 
         // Search user by email
         $user = $userManager->findByEmail($email);
@@ -108,6 +114,9 @@ class UserController
         Helpers::redirect("account");
     }
 
+    /**
+     * @return void
+     */
     public function logoutUser() : void
     {
         Helpers::startSession();
@@ -115,6 +124,7 @@ class UserController
         // Deletes session data
         session_unset();
         session_destroy();
+        $_SESSION = [];
 
         // Redirects to the homepage
         Helpers::redirect("home");

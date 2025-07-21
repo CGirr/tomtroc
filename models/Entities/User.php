@@ -6,6 +6,7 @@ class User extends AbstractEntity
     private string $password;
     private string $email;
     private DateTime $registerDate;
+    private string $profilePicture;
 
     public function getLogin(): string
     {
@@ -48,5 +49,15 @@ class User extends AbstractEntity
             $registerDate = DateTime::createFromFormat('Y-m-d', $registerDate);
         }
         $this->registerDate = $registerDate;
+    }
+
+    public function getProfilePicture(): string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(string $profilePicture): void
+    {
+        $this->profilePicture = $profilePicture;
     }
 }

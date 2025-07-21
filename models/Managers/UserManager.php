@@ -51,11 +51,35 @@ class UserManager extends AbstractEntityManager
         return $result['total'] > 0;
     }
 
+    /**
+     * @param string $email
+     * @return User|null
+     */
     public function findByEmail(string $email) : ?User
     {
         $sql = $this->db->prepare("SELECT * FROM user WHERE email = :email");
         $sql->execute([
             'email' => $email,
+        ]);
+
+        $data = $sql->fetch();
+
+        if ($data) {
+            return new User($data);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $id
+     * @return User|null
+     */
+    public function findUserById(int $id) : ?User
+    {
+        $sql = $this->db->prepare("SELECT * FROM user WHERE id = :id");
+        $sql->execute([
+            'id' => $id,
         ]);
 
         $data = $sql->fetch();
