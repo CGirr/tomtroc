@@ -30,6 +30,12 @@ class Helpers {
         return htmlspecialchars(trim($data, ENT_QUOTES, 'UTF-8'));
     }
 
+    /**
+     * @param string $key
+     * @param mixed|null $default
+     * @param string $method
+     * @return mixed
+     */
     public static function request(string $key, mixed $default = null, string $method = 'both') : mixed
     {
         switch(strtolower($method)) {
@@ -55,10 +61,31 @@ class Helpers {
         return is_string($value) ? htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8') : $value;
     }
 
+    /**
+     * @return void
+     */
     public static function startSession(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isUserLoggedIn(): bool
+    {
+        return isset($_SESSION['user']);
+    }
+
+    /**
+     * @return void
+     */
+    public static function checkIfUserIsConnected(): void
+    {
+        if(!isset($_SESSION['user'])) {
+            self::redirect("connectionForm");
         }
     }
 }

@@ -18,10 +18,17 @@ try {
         case 'login' :
             $userController = new UserController();
             $userController->loginUser();
+        case 'logout':
+            $userController = new UserController();
+            $userController->logoutUser();
             break;
         case 'register':
             $userController = new UserController();
             $userController->showRegistrationForm();
+            break;
+        case 'account' :
+            $userController = new UserController();
+            $userController->showAccount();
             break;
         case 'addUser':
             $userController = new UserController();

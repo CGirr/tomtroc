@@ -15,9 +15,11 @@ a {
 
 :root {
     --backgroundColor: rgba(245, 243, 239, 1);
+    --backgroundLight: rgba(250, 249, 247, 1);
     --greyTextColor: rgba(166, 166, 166, 1);
     --greenButtonColor: rgba(0, 172, 102, 1);
     --darkGreyText: rgba(41, 41, 41, 1);
+    --greyBorder: rgba(240, 240, 240, 1)
 }
 
 .inter-text {
@@ -135,6 +137,45 @@ p {
     display: flex;
     gap: 100px;
     height: 539px;
+}
+
+.login-container {
+    display: flex;
+    height: 886px;
+    background-color: var(--backgroundLight);
+}
+
+.login-form-container {
+    padding: 130px 248px 314px 150px;
+}
+
+.login-form-container h1 {
+    margin-bottom: 56px;
+}
+
+.login-form-container form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    color: var(--greyTextColor);
+}
+
+.login-form-container form input {
+    margin-bottom: 32px;
+    height: 50px;
+    width: 322px;
+    border-radius: 6px;
+    border: 1px solid var(--greyBorder);
+    padding-left: 10px;
+}
+
+.login-form-container form button {
+    width: 322px;
+    margin-bottom: 40px;
+}
+
+.login-container img {
+    width: 720px;
 }
 
 .accueil {

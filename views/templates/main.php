@@ -29,13 +29,17 @@
                     <img src="./images/logo.png" alt="logo de TomTroc" class="header-logo">
                 </div>
                 <div class="nav-block-1">
-                    <a href="#" class="nav-link-1">Accueil</a>
+                    <a href="index.php?action=home" class="nav-link-1">Accueil</a>
                     <a href="#">Nos livres à l'échange</a>
                 </div>
                 <div class="nav-block-2">
                     <a href="#" class="nav-link-2"><img src="./images/message_icon.png" alt="Icône de messagerie" class="i-message">Messagerie</a>
-                    <a href="#" class="nav-link-2"><img src="./images/my_account_icon.png" alt="Icône de messagerie" class="i-my-account">Mon compte</a>
-                    <a class="submit" href="index.php?action=connectionForm">Connexion</a>
+                    <a href="index.php?action=account" class="nav-link-2"><img src="./images/my_account_icon.png" alt="Icône de compte" class="i-my-account">Mon compte</a>
+                    <?php if (\Helpers::isUserLoggedIn()): ?>
+                        <a href="index.php?action=logout">Déconnexion</a>
+                    <?php else: ?>
+                        <a href="index.php?action=connectionForm">Connexion</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -58,4 +62,3 @@
 
 </body>
 </html>
-

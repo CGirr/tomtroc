@@ -23,6 +23,18 @@ class UserController
     }
 
     /**
+     * Displays personal account view
+     * @throws Exception
+     */
+    public function showAccount() : void
+    {
+        Helpers::checkIfUserIsConnected();
+
+        $view = new View('Mon compte');
+        $view->render("myAccount");
+    }
+
+    /**
      * Registers a new user
      * @throws Exception
      */
@@ -54,7 +66,7 @@ class UserController
 
         // Inserts new user
         if ($userManager->addUser($user)) {
-            header('Location: index.php?route=connexion');
+            Helpers::redirect("connectionForm");
             exit;
         } else {
             throw new Exception("Erreur lors de l’inscription.");
@@ -92,5 +104,19 @@ class UserController
             'login' => $user->getLogin(),
             'email' => $user->getEmail()
         ];
+
+        Helpers::redirect("account");
+    }
+
+    public function logoutUser() : void
+    {
+        Helpers::startSession();
+
+        // Deletes session data
+        session_unset();
+        session_destroy();
+
+        // Redirects to the homepage
+        Helpers::redirect("home");
     }
 }
