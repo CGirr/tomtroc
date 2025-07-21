@@ -32,8 +32,6 @@ class Helpers {
 
     public static function request(string $key, mixed $default = null, string $method = 'both') : mixed
     {
-        $value = null;
-
         switch(strtolower($method)) {
             case 'get':
                 $value = $_GET[$key] ?? $default;
@@ -55,5 +53,12 @@ class Helpers {
         }
 
         return is_string($value) ? htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8') : $value;
+    }
+
+    public static function startSession(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 }

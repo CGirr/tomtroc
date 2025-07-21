@@ -45,7 +45,7 @@ class User extends AbstractEntity
     public function setRegisterDate(string|DateTime $registerDate): void
     {
         if (is_string($registerDate)) {
-            $registerDate = DateTime::createFromFormat('Y-m-d H:i:s', $registerDate);
+            $registerDate = DateTime::createFromFormat('Y-m-d', $registerDate);
         }
         $this->registerDate = $registerDate;
     }

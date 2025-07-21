@@ -35,7 +35,7 @@
                 <div class="nav-block-2">
                     <a href="#" class="nav-link-2"><img src="./images/message_icon.png" alt="Icône de messagerie" class="i-message">Messagerie</a>
                     <a href="#" class="nav-link-2"><img src="./images/my_account_icon.png" alt="Icône de messagerie" class="i-my-account">Mon compte</a>
-                    <a href="#">Connexion</a>
+                    <a class="submit" href="index.php?action=connectionForm">Connexion</a>
                 </div>
             </div>
         </nav>

@@ -9,6 +9,10 @@ body {
     margin: 0 auto;
 }
 
+a {
+    color: var(--darkGreyText);
+}
+
 :root {
     --backgroundColor: rgba(245, 243, 239, 1);
     --greyTextColor: rgba(166, 166, 166, 1);

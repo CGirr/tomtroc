@@ -9,8 +9,6 @@ class HomeController
      */
     public function showHome() : void
     {
-        $homeController = new HomeController();
-
         $view = new View('Home');
         $view->render("home");
     }
