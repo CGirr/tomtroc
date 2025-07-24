@@ -1,5 +1,9 @@
 <?php
 
+namespace Managers;
+
+use DBManager;
+
 /**
  * Class ManagerFactory
  * Provides centralized access to entity managers

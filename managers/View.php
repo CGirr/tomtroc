@@ -1,5 +1,6 @@
 <?php
 
+namespace Managers;
 /**
  * This class generates views based on parameters sent from controller
  */
@@ -24,7 +25,7 @@ class View
      * @return void
      * @throws Exception
      */
-    public function render(string $viewName, array $params = []) : void
+    public function render(string $viewName, array $params = []): void
     {
         $viewPath = $this->buildViewPath($viewName);
 
@@ -42,23 +43,23 @@ class View
      * @return string
      * @throws Exception
      */
-    private function _renderViewFromTemplate(string $viewPath, array $params = []) : string
+    private function _renderViewFromTemplate(string $viewPath, array $params = []): string
     {
-       if (file_exists($viewPath)) {
-           extract($params);
-           ob_start();
-           require($viewPath);
-           return ob_get_clean();
-       } else {
-           throw new Exception("La vue '$viewPath' n'existe pas.");
-       }
+        if (file_exists($viewPath)) {
+            extract($params);
+            ob_start();
+            require($viewPath);
+            return ob_get_clean();
+        } else {
+            throw new Exception("La vue '$viewPath' n'existe pas.");
+        }
     }
 
     /** Generates the path to the desired view.
      * @param string $viewName
      * @return string
      */
-    private function buildViewPath(string $viewName) : string
+    private function buildViewPath(string $viewName): string
     {
         return TEMPLATE_VIEW_PATH . $viewName . '.php';
     }

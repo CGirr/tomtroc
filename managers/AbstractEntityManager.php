@@ -1,9 +1,13 @@
 <?php
 
+namespace Managers;
+use DBManager;
+
 /**
  * Abstract manager handling database interaction
  */
-abstract class AbstractEntityManager {
+abstract class AbstractEntityManager
+{
 
     protected PDO $db;
 

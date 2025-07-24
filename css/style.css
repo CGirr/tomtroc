@@ -32,7 +32,7 @@ a[aria-current="page"] {
     font-weight: bold;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     font-family: var(--font-title);
     font-weight: 400;
 }
@@ -212,6 +212,10 @@ p {
     justify-content: center;
     flex-direction: column;
     gap: 14px;
+}
+
+.accueil button {
+    margin-top: 26px;
 }
 
 /* Sections */

@@ -1,5 +1,9 @@
 <?php
 
+use Managers\ManagerFactory;
+use Managers\View;
+use models\User;
+
 class UserController
 {
     /**

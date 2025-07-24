@@ -10,12 +10,12 @@ spl_autoload_register(function ($class)
         require 'controllers/' . $class .'.php';
     }
 
-    if (file_exists('models/Entities/' . $class .'.php')) {
-        require 'models/Entities/' . $class .'.php';
+    if (file_exists('models/' . $class .'.php')) {
+        require 'models/' . $class .'.php';
     }
 
-    if (file_exists('models/Managers/' . $class .'.php')) {
-        require 'models/Managers/' . $class .'.php';
+    if (file_exists('managers/' . $class .'.php')) {
+        require 'managers/' . $class .'.php';
     }
 
     if (file_exists('views/' . $class .'.php')) {

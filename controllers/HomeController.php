@@ -1,5 +1,7 @@
 <?php
 
+use Managers\View;
+
 class HomeController
 {
     /**
