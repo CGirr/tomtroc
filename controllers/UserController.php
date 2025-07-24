@@ -6,10 +6,11 @@ class UserController
      * Displays the connection form
      * @throws Exception
      */
-    public function showConnexionForm() : void
+    public function showConnectionForm() : void
     {
+        $action = Helpers::request('action', 'connectionForm', 'get');
         $view = new View('Connexion');
-        $view->render("connectionForm");
+        $view->render("connectionForm", ["action" => $action]);
     }
 
     /**
@@ -29,17 +30,14 @@ class UserController
     public function showAccount() : void
     {
         Helpers::checkIfUserIsConnected();
-        $id = Helpers::request("id", null);
 
         $userManager = ManagerFactory::getUserManager();
-        var_dump($_SESSION['user']);
 
         $user = $userManager->findUserById($_SESSION['user']['id']);
 
-        var_dump($user);
-
+        $action = Helpers::request('action', 'account', 'get');
         $view = new View('Mon compte');
-        $view->render("myAccount", ["user" => $user]);
+        $view->render("myAccount", ["user" => $user, "action" => $action]);
     }
 
     /**
@@ -48,8 +46,8 @@ class UserController
      */
     public function registerUser() : void
     {
-        $login = Helpers::request("login");
-        $email = Helpers::request("email");
+        $login = Helpers::sanitize(Helpers::request("login"));
+        $email = Helpers::sanitize(Helpers::request("email"));
         $password = Helpers::request("password");
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 

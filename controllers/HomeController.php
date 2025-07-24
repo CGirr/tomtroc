@@ -9,7 +9,8 @@ class HomeController
      */
     public function showHome() : void
     {
+        $action = Helpers::request('action', 'home', 'get');
         $view = new View('Home');
-        $view->render("home");
+        $view->render("home",['action' => $action]);
     }
 }

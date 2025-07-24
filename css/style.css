@@ -1,3 +1,15 @@
+:root {
+    --bg-color: rgba(245, 243, 239, 1);
+    --bg-light: rgba(250, 249, 247, 1);
+    --text-grey: rgba(166, 166, 166, 1);
+    --green: rgba(0, 172, 102, 1);
+    --text-dark: rgba(41, 41, 41, 1);
+    --border-grey: rgba(240, 240, 240, 1);
+
+    --font-base: "Inter", sans-serif;
+    --font-title: "Playfair Display", serif;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,67 +19,73 @@
 body {
     max-width: 1440px;
     margin: 0 auto;
+    font-family: var(--font-base);
+    color: var(--text-dark);
+    background-color: var(--bg-color);
 }
 
 a {
-    color: var(--darkGreyText);
+    color: var(--text-dark);
 }
 
-:root {
-    --backgroundColor: rgba(245, 243, 239, 1);
-    --backgroundLight: rgba(250, 249, 247, 1);
-    --greyTextColor: rgba(166, 166, 166, 1);
-    --greenButtonColor: rgba(0, 172, 102, 1);
-    --darkGreyText: rgba(41, 41, 41, 1);
-    --greyBorder: rgba(240, 240, 240, 1)
+a[aria-current="page"] {
+    font-weight: bold;
 }
 
-.inter-text {
-    font-family: "Inter", sans-serif;
+h1, h2, h3 {
+    font-family: var(--font-title);
     font-weight: 400;
-    font-size: 14px;
-}
-
-.inter-italic-text {
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 12px;
-    font-style: italic;
-    color: var(--greyTextColor);
-}
-
-.dark-grey-text {
-    color: var(--darkGreyText);
-}
-
-.button-text {
-    font-family: "Inter";
-    font-size: 16px;
-    font-weight: 600;
 }
 
 h1 {
-    font-family: "Playfair Display";
-    font-weight: 400;
     font-size: 36px;
+    color: black;
 }
 
 h2 {
-    font-family: "Playfair Display";
-    font-weight: 400;
     font-size: 32px;
-    color: var(--darkGreyText);
+}
+
+h3 {
+    font-size: 24px;
+}
+
+h4 {
+    font-family: var(--font-base);
+    font-size: 16px;
 }
 
 p {
-    font-family: "Inter";
     font-weight: 300;
     font-size: 16px;
 }
 
+.inter-text {
+    font-size: 14px;
+}
+
+.inter-italic-text {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text-grey);
+}
+
+.light-grey-text {
+    color: var(--text-grey)
+}
+
+.dark-grey-text {
+    color: var(--text-dark);
+}
+
+.button-text {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Header */
 .header-nav {
     padding: 15px 0px 15px 150px;
-    background-color: var(--backgroundColor)
 }
 
 .header-logo {
@@ -75,28 +93,15 @@ p {
     width: 155px;
 }
 
-.header-nav a, .footer-nav a {
-    text-decoration: none;
-    color: var(--darkGreyText);
-}
-
 .nav-container {
     display: flex;
     align-items: center;
 }
 
-.i-message {
-    width: 15px;
-    height: 13px;
-    margin-right: 3px;
-    vertical-align: middle;
-}
-
-.i-my-account {
-    width: 10px;
-    height: 13px;
-    margin-right: 4px;
-    vertical-align: middle;
+.header-nav a,
+.footer-nav a {
+    color: var(--text-dark);
+    text-decoration: none;
 }
 
 .nav-block-1 {
@@ -118,6 +123,24 @@ p {
     margin-right: 58px;
 }
 
+.i-message,
+.i-my-account {
+    vertical-align: middle;
+}
+
+.i-message {
+    width: 15px;
+    height: 13px;
+    margin-right: 3px;
+}
+
+.i-my-account {
+    width: 10px;
+    height: 13px;
+    margin-right: 4px;
+}
+
+/* Footer */
 .footer-nav {
     background-color: white;
     padding: 23px 46px;
@@ -133,16 +156,11 @@ p {
     gap: 40px;
 }
 
-.flex-container {
-    display: flex;
-    gap: 100px;
-    height: 539px;
-}
-
+/* Login and registration */
 .login-container {
     display: flex;
     height: 886px;
-    background-color: var(--backgroundLight);
+    background-color: var(--bg-light);
 }
 
 .login-form-container {
@@ -157,7 +175,7 @@ p {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-    color: var(--greyTextColor);
+    color: var(--text-grey);
 }
 
 .login-form-container form input {
@@ -165,7 +183,7 @@ p {
     height: 50px;
     width: 322px;
     border-radius: 6px;
-    border: 1px solid var(--greyBorder);
+    border: 1px solid var(--border-grey);
     padding-left: 10px;
 }
 
@@ -178,9 +196,9 @@ p {
     width: 720px;
 }
 
+/* Home */
 .accueil {
     display: flex;
-    background-color: var(--backgroundColor);
     padding: 80px 310px 128px 292px;
     gap: 105px;
 }
@@ -196,9 +214,10 @@ p {
     gap: 14px;
 }
 
+/* Sections */
 .last-added-section {
-    background-color: white;
     padding: 80px 263px 64px 263px;
+    background-color: var(--bg-light);
 }
 
 .last-added-section > .container {
@@ -210,7 +229,7 @@ p {
 }
 
 .how-to-section {
-    background-color: var(--backgroundColor);
+    background-color: var(--bg-color);
     padding: 80px 236px 80px 236px;
 }
 
@@ -253,7 +272,7 @@ p {
 }
 
 .values {
-    background-color: var(--backgroundColor);
+    background-color: var(--bg-color);
     padding-top: 70px;
 }
 
@@ -291,17 +310,69 @@ figcaption {
     float: right;
 }
 
+.my-account {
+    margin: 90px 155px 102px 150px;
+}
+
+.my-account-container {
+    display: flex;
+    height: 508px;
+    gap: 33px;
+    margin-top: 48px;
+}
+
+.my-account-container article {
+    width: 550px;
+    background-color: var(--bg-light);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-block {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-block img {
+    margin-top: 50px;
+    max-width: 136px;
+    height: auto;
+}
+
+.profile-block a {
+    color: var(--text-grey);
+}
+
+.line {
+    height: 1px;
+    width: 250px;
+    background-color: var(--bg-color);
+    margin: 50px 0px 50px 0px;
+
+
+}
+
+.my-account-container article form {
+
+}
+
+/* Buttons */
 .green-button {
     color: white;
-    background-color: var(--greenButtonColor);
+    background-color: var(--green);
     border: transparent;
     border-radius: 10px;
     padding: 22px 38px 22px 38px;
 }
 
 .dark-grey-button {
-    color: var(--greenButtonColor);
-    border: 1px solid var(--greenButtonColor);
+    color: var(--green);
+    border: 1px solid var(--green);
     border-radius: 10px;
     padding: 22px 38px 22px 38px;
     margin-top: 48px;

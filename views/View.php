@@ -30,6 +30,7 @@ class View
 
         $content = $this->_renderViewFromTemplate($viewPath, $params);
         $title = $this->title;
+        $action = $params['action'] ?? '';
         ob_start();
         require(MAIN_VIEW_PATH);
         echo ob_get_clean();
