@@ -1,8 +1,5 @@
 <?php
 
-namespace Managers;
-use DBManager;
-
 /**
  * Abstract manager handling database interaction
  */

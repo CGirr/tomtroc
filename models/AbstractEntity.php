@@ -1,6 +1,5 @@
 <?php
 
-namespace models;
 /**
  * Base class for all entity objects
  */

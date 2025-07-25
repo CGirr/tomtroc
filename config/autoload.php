@@ -2,23 +2,23 @@
 
 spl_autoload_register(function ($class)
 {
-    if (file_exists('utils/' . $class .'.php')) {
-        require 'utils/' . $class .'.php';
+    if (file_exists(__DIR__ . '/../utils/' . $class .'.php')) {
+        require __DIR__ . '/../utils/' . $class .'.php';
     }
 
-    if (file_exists('controllers/' . $class .'.php')) {
-        require 'controllers/' . $class .'.php';
+    if (file_exists(__DIR__ . '/../controllers/' . $class .'.php')) {
+        require __DIR__ . '/../controllers/' . $class .'.php';
     }
 
-    if (file_exists('models/' . $class .'.php')) {
-        require 'models/' . $class .'.php';
+    if (file_exists(__DIR__ . '/../models/' . $class .'.php')) {
+        require __DIR__ . '/../models/' . $class .'.php';
     }
 
-    if (file_exists('managers/' . $class .'.php')) {
-        require 'managers/' . $class .'.php';
+    if (file_exists(__DIR__ . '/../managers/' . $class .'.php')) {
+        require __DIR__ . '/../managers/' . $class .'.php';
     }
 
-    if (file_exists('views/' . $class .'.php')) {
-        require 'views/' . $class .'.php';
+    if (file_exists(__DIR__ . '/../core/' . $class .'.php')) {
+        require __DIR__ . '/../core/' . $class .'.php';
     }
 });

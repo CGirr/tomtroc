@@ -1,9 +1,5 @@
 <?php
 
-namespace Managers;
-
-use models\User;
-
 /**
  * UserManager class that handles all database operations related to the User entity
  * (creating, updating or deleting users, checking for existing emails or logins)

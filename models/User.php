@@ -1,7 +1,5 @@
 <?php
 
-namespace models;
-
 class User extends AbstractEntity
 {
     private string $login;

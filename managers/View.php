@@ -1,6 +1,5 @@
 <?php
 
-namespace Managers;
 /**
  * This class generates views based on parameters sent from controller
  */
