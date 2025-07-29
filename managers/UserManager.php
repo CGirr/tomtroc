@@ -13,20 +13,43 @@ class UserManager extends AbstractEntityManager
      */
     public function addUser(User $user): bool
     {
-        $sql = $this->db->prepare("INSERT INTO user (login, email, password, register_date)
+        $stmt = $this->db->prepare("INSERT INTO user (login, email, password, register_date)
                                          VALUES(:login, :email, :password, NOW())");
-        return $sql->execute([
+        return $stmt->execute([
             "login" => $user->getLogin(),
             "email" => $user->getEmail(),
             "password" => $user->getPassword(),
         ]);
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function updateUser(User $user): bool
     {
-
+        if(!empty($user->getPassword())) {
+            $stmt = $this->db->prepare("UPDATE user SET login = :login, email = :email, password = :password WHERE id = :id");
+            return $stmt->execute([
+                "login" => $user->getLogin(),
+                "email" => $user->getEmail(),
+                "password" => $user->getPassword(),
+                "id" => $user->getId()
+            ]);
+        } else {
+            $stmt = $this->db->prepare("UPDATE user SET login = :login, email = :email WHERE id = :id");
+            return $stmt->execute([
+                "login" => $user->getLogin(),
+                "email" => $user->getEmail(),
+                "id" => $user->getId()
+            ]);
+        }
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function deleteUser(User $user): bool
     {
 
@@ -38,15 +61,24 @@ class UserManager extends AbstractEntityManager
      * @param string $email
      * @return bool
      */
-    public function emailOrLoginExists(string $login, string $email): bool
+    public function emailOrLoginExists(string $login, string $email, ?int $excludeUserId = null): bool
     {
-        $sql = $this->db->prepare("SELECT COUNT(*) as total FROM user WHERE email = :email OR login = :login");
-        $sql->execute([
-            'email' => $email,
-            'login' => $login,
-        ]);
+        $sql = "SELECT COUNT(*) as total FROM user WHERE (email = :email OR login = :login)";
 
-        $result = $sql->fetch();
+        if ($excludeUserId !== null) {
+            $sql .= " AND id != :excludeUserId";
+        }
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":email", $email);
+        $stmt->bindValue(":login", $login);
+
+        if ($excludeUserId !== null) {
+            $stmt->bindValue(":excludeUserId", $excludeUserId, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+        $result = $stmt->fetch();
 
         return $result['total'] > 0;
     }
@@ -57,12 +89,12 @@ class UserManager extends AbstractEntityManager
      */
     public function findByEmail(string $email): ?User
     {
-        $sql = $this->db->prepare("SELECT * FROM user WHERE email = :email");
-        $sql->execute([
+        $stmt = $this->db->prepare("SELECT * FROM user WHERE email = :email");
+        $stmt->execute([
             'email' => $email,
         ]);
 
-        $data = $sql->fetch();
+        $data = $stmt->fetch();
 
         if ($data) {
             return new User($data);
@@ -77,12 +109,12 @@ class UserManager extends AbstractEntityManager
      */
     public function findUserById(int $id): ?User
     {
-        $sql = $this->db->prepare("SELECT * FROM user WHERE id = :id");
-        $sql->execute([
+        $stmt = $this->db->prepare("SELECT * FROM user WHERE id = :id");
+        $stmt->execute([
             'id' => $id,
         ]);
 
-        $data = $sql->fetch();
+        $data = $stmt->fetch();
 
         if ($data) {
             return new User($data);

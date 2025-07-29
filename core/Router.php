@@ -19,7 +19,7 @@ class Router
 
     public function handleRequest(): void
     {
-        $action = Helpers::request('action', 'home', 'get');
+        $action = Helpers::request('action', 'home', 'both');
 
         try {
             if (!array_key_exists($action, $this->routes)) {
@@ -27,7 +27,6 @@ class Router
             }
 
             [$controllerClass, $method] = $this->routes[$action];
-
             $controller = new $controllerClass();
 
             if (!method_exists($controller, $method)) {
@@ -35,9 +34,10 @@ class Router
             }
 
             $controller->$method();
+        } catch (FormException $fe) {
 
         } catch (Exception $exception) {
-            http_response_code(400);
+            http_response_code(404);
             $errorView = new View('Erreur 404');
             $errorView->render('error', ['errorMessage' => $exception->getMessage()]);
         }

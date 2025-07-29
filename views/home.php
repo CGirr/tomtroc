@@ -17,7 +17,7 @@
         <div>
             <figure>
                 <img src="./images/hamza-nouasria.png" alt="Hamza Nouasria">
-                <figcaption class="inter-italic-text">Hamza</figcaption>
+                <figcaption class="inter-italic-text light-grey-text">Hamza</figcaption>
             </figure>
         </div>
 </section>
@@ -82,7 +82,7 @@
             de partager leurs découvertes littéraires et d'échanger des livres qui attendent patiemment sur les étagères.
         </p>
         <div class="span-container">
-            <span class="inter-italic-text home-span">L'équipe Tom Troc</span>
+            <span class="inter-italic-text light-grey-text home-span">L'équipe Tom Troc</span>
             <img src="./images/heart-logo.png">
         </div>
     </div>

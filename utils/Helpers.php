@@ -30,6 +30,17 @@ class Helpers {
         return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
     }
 
+
+    /**
+     * @param string $url
+     * @param string $fallback
+     * @return string
+     */
+    public static function sanitizeUrl(string $url) : string
+    {
+        return filter_var(trim($url), FILTER_SANITIZE_URL);
+    }
+
     /**
      * @param string $key
      * @param mixed|null $default

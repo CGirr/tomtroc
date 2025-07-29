@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *
+ */
 class UserController
 {
     /**
@@ -27,89 +30,124 @@ class UserController
      * Displays personal account view
      * @throws Exception
      */
-    public function showAccount() : void
+    public function showAccount(): void
     {
         Helpers::checkIfUserIsConnected();
 
-        $userManager = ManagerFactory::getUserManager();
+        $userId = $_SESSION['user']['id'];
 
-        $user = $userManager->findUserById($_SESSION['user']['id']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->handleAccountUpdate($userId);
+            exit;
+        }
 
-        $action = Helpers::request('action', 'account', 'get');
-        $view = new View('Mon compte');
-        $view->render("myAccount", ["user" => $user, "action" => $action]);
+        $this->renderAccountView($userId);
     }
 
     /**
-     * Registers a new user
+     * @param int $userId
+     * @return void
+     */
+    private function handleAccountUpdate(int $userId) : void
+    {
+        $formData = [
+            'login' => Helpers::request('login', 'account', 'post'),
+            'email' => Helpers::request('email', 'account', 'post'),
+            'password' => Helpers::request('password', 'account', 'post'),
+        ];
+
+        try {
+            UserService::updateProfile($formData);
+            Helpers::redirect('account');
+            exit;
+        } catch (Exception $e) {
+            $this->renderAccountView($userId, $e->getMessage(), $formData);
+        }
+    }
+
+    private function renderAccountView(int $userId, string $error = null, array $formData = null) : void
+    {
+        $accountData = UserService::getAccountData($userId);
+
+        if ($formData === null) {
+            $formData = [
+                'login' => $_SESSION['user']['login'],
+                'email' => $_SESSION['user']['email'],
+                'password' => ''
+            ];
+        }
+
+        $viewData = array_merge($accountData, [
+            'error' => $error,
+            'formData' => $formData,
+            'action' => Helpers::request('action', 'account', 'post')
+        ]);
+
+        $view = new View('Mon compte');
+        $view->render('myAccount', $viewData);
+    }
+
+    /**
+     * @return void
      * @throws Exception
      */
     public function registerUser() : void
     {
-        $login = Helpers::sanitize(Helpers::request("login"));
-        $email = Helpers::sanitize(Helpers::request("email"));
-        $password = Helpers::request("password");
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $error = null;
 
-        // Checks if fields are empty
-        if (empty($login) || empty($email) || empty($password)) {
-            throw new Exception("Tous les champs sont obligatoires");
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            try {
+                $login = Helpers::request("login");
+                $email = Helpers::request("email");
+                $password = Helpers::request("password");
+
+                UserService::register($login, $email, $password);
+
+                Helpers::redirect('login');
+                exit;
+
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
         }
 
-        $user = new User([
-            "login" => $login,
-            "email" => $email,
-            "password" => $hashedPassword
+        $view = new View("Inscription");
+        $view->render('registrationForm', [
+            'error' => $error,
+            'formData' => [
+                'login' => $_POST['login'] ?? '',
+                'email' => $_POST['email'] ?? '',
+            ]
         ]);
-
-        $userManager = ManagerFactory::getUserManager();
-
-        // Checks if login or email is already used
-        if ($userManager->emailOrLoginExists($email, $login)) {
-            throw new Exception("Ce login ou cet email est déjà utilisé");
-        }
-
-        // Inserts new user
-        if ($userManager->addUser($user)) {
-            Helpers::redirect("connectionForm");
-            exit;
-        } else {
-            throw new Exception("Erreur lors de l’inscription.");
-        }
     }
 
     /**
-     *
      * @return void
      * @throws Exception
      */
-    public function loginUser() : void
+    public function loginUser(): void
     {
-        $email = Helpers::request("email");
-        $password = Helpers::request("password");
+        $error = null;
 
-        if (empty($email) || empty($password)) {
-            throw new Exception("Tous les champs sont obligatoires");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                $email = Helpers::request('email', null, 'post');
+                $password = Helpers::request('password', null, 'post');
+
+                UserService::login($email, $password);
+
+                Helpers::redirect('account');
+                exit;
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
         }
 
-        $userManager = ManagerFactory::getUserManager();
-
-        // Search user by email
-        $user = $userManager->findByEmail($email);
-
-        if (!$user || !password_verify($password, $user->getPassword())) {
-            throw new Exception("Les identifiants sont incorrects");
-        }
-
-        // Login successful, user is stored in session
-        Helpers::startSession();
-        $_SESSION['user'] = [
-            'id' => $user->getId(),
-            'login' => $user->getLogin(),
-            'email' => $user->getEmail()
-        ];
-
-        Helpers::redirect("account");
+        $view = new View("Connexion");
+        $view->render("connectionForm", [
+            'error' => $error,
+            'formData' => ['email' => $email ?? '', 'password' => '']
+        ]);
     }
 
     /**
@@ -117,14 +155,7 @@ class UserController
      */
     public function logoutUser() : void
     {
-        Helpers::startSession();
-
-        // Deletes session data
-        session_unset();
-        session_destroy();
-        $_SESSION = [];
-
-        // Redirects to the homepage
+        UserService::logout();
         Helpers::redirect("home");
     }
 }

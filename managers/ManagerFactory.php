@@ -15,4 +15,10 @@ class ManagerFactory
         $db = DBManager::getInstance()->getConnection();
         return new UserManager($db);
     }
+
+    public static function getBookManager(): BookManager
+    {
+        $db = DBManager::getInstance()->getConnection();
+        return new BookManager($db);
+    }
 }
