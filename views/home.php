@@ -17,7 +17,7 @@
         <div>
             <figure>
                 <img src="./images/hamza-nouasria.png" alt="Hamza Nouasria">
-                <figcaption class="inter-italic-text light-grey-text">Hamza</figcaption>
+                <figcaption class="medium-text italic-text light-grey-text">Hamza</figcaption>
             </figure>
         </div>
 </section>
@@ -26,8 +26,21 @@
         <div>
             <h2>Les derniers livres ajoutés</h2>
         </div>
-        <div>
-            <p>Les livres s'affichent ici</p>
+        <div class="last-added-books-container">
+            <?php foreach ($books as $book) : ?>
+                <a href="index.php?action=singleBook&id=<?= (int)$book['id'] ?>" class="last-added-book">
+                    <img src="<?= Helpers::sanitizeUrl($book['cover']) ?>" alt="Couverture du livre <?= Helpers::sanitize($book['title']) ?>">
+                    <h4>
+                        <?= Helpers::sanitize($book['title']) ?>
+                    </h4>
+                    <div class="inter-text light-grey-text last-added-book-author">
+                        <?= Helpers::sanitize($book['author']) ?>
+                    </div>
+                    <div class="small-text-10 italic-text light-grey-text">
+                        Vendu par : <?= Helpers::sanitize($book['vendor']) ?>
+                    </div>
+                </a>
+            <?php endforeach; ?>
         </div>
         <div>
             <button class="green-button button-text">Voir tous les livres</button>
@@ -82,9 +95,8 @@
             de partager leurs découvertes littéraires et d'échanger des livres qui attendent patiemment sur les étagères.
         </p>
         <div class="span-container">
-            <span class="inter-italic-text light-grey-text home-span">L'équipe Tom Troc</span>
+            <span class="medium-text italic-text light-grey-text home-span">L'équipe Tom Troc</span>
             <img src="./images/heart-logo.png">
         </div>
     </div>
 </section>
-

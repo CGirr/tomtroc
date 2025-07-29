@@ -30,7 +30,7 @@
                 </div>
                 <div class="nav-block-1">
                     <a href="index.php?action=home" <?= ($action === 'home') ? 'aria-current="page"' : '' ?> class="nav-link-1">Accueil</a>
-                    <a href="#">Nos livres à l'échange</a>
+                    <a href="#" <?= ($action === 'singleBook') ? 'aria-current="page"' : '' ?>>Nos livres à l'échange</a>
                 </div>
                 <div class="nav-block-2">
                     <a href="#" class="nav-link-2"><img src="./images/message_icon.png" alt="Icône de messagerie" class="i-message">Messagerie</a>

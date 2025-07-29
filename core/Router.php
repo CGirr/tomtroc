@@ -14,6 +14,7 @@ class Router
             'register' => [UserController::class, 'showRegistrationForm'],
             'account' => [UserController::class, 'showAccount'],
             'addUser' => [UserController::class, 'registerUser'],
+            'singleBook' => [BookController::class, 'showSingleBook'],
         ];
     }
 

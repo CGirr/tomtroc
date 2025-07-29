@@ -9,8 +9,14 @@ class HomeController
      */
     public function showHome() : void
     {
+        $booksManager = ManagerFactory::getBookManager();
+        $books = $booksManager->findLastAddedBooks();
+
         $action = Helpers::request('action', 'home', 'get');
         $view = new View('Home');
-        $view->render("home",['action' => $action]);
+        $view->render("home", [
+            'action' => $action,
+            'books' => $books
+        ]);
     }
 }

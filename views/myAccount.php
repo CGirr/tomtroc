@@ -11,7 +11,7 @@
                         <img src="<?= Helpers::sanitizeUrl($profilePicture) ?>" alt="Photo de profil de l'utilisateur">
                         <a href="#" class="inter-text light-grey-text">modifier</a>
                     </div>
-                    <div class="line"></div>
+                    <div class="line-250"></div>
                     <div class="member-block">
                         <h3><?= Helpers::sanitize($login) ?></h3>
                         <div class="light-grey-text member-block-years">

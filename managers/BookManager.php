@@ -4,23 +4,61 @@
  * BookManager class that handles all database operations related to the Book entity
  * (creating, updating or deleting books...)
  */
-class BookManager extends AbstractEntityManager {
-   public function findNumberOfBooks(int $userId) : int
+class BookManager extends AbstractEntityManager
+{
+
+    /**
+     * @param $id
+     * @return Book|null
+     */
+    public function findBookById(int $id): ?array
+{
+        $stmt = $this->db->prepare(
+            "SELECT b.*, u.login as vendor, u.profile_picture as profile_picture
+                    FROM books b
+                    JOIN user u ON b.user_id = u.id
+                    WHERE b.id = :id");
+        $stmt->execute(['id' => $id]);
+        $book = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $book ?: null;
+    }
+
+    /**
+     * @param int $userId
+     * @return int
+     */
+    public function findNumberOfBooks(int $userId): int
    {
-       $sql = $this->db->prepare("SELECT COUNT(*) FROM books WHERE user_id = ?");
-       $sql->execute([$userId]);
-       return $sql->fetchColumn();
+       $stmt = $this->db->prepare("SELECT COUNT(*) FROM books WHERE user_id = ?");
+       $stmt->execute([$userId]);
+       return $stmt->fetchColumn();
    }
 
-   public function findBooksByUserId(int $userId) : array {
-       $sql = $this->db->prepare("SELECT cover, title, author, description, available  FROM books WHERE user_id = ?");
-       $sql->execute([$userId]);
-       return $sql->fetchAll(PDO::FETCH_ASSOC);
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function findBooksByUserId(int $userId): array
+    {
+       $stmt = $this->db->prepare("SELECT cover, title, author, description, available FROM books WHERE user_id = ?");
+       $stmt->execute([$userId]);
+       return $stmt->fetchAll(PDO::FETCH_ASSOC);
    }
 
-   public function findLastAddedBooks() : array {
-       $sql = $this->db->prepare("SELECT * FROM books ORDER BY created_at DESC LIMIT 4");
-       $sql->execute();
-       return $sql->fetchAll(PDO::FETCH_ASSOC);
+    /**
+     * @return array
+     */
+    public function findLastAddedBooks(): array
+    {
+       $stmt = $this->db->prepare(
+       "SELECT b.*, u.login as vendor
+                FROM books b
+                JOIN user u ON b.user_id = u.id
+                ORDER BY created_at DESC 
+                LIMIT 4"
+       );
+       $stmt->execute();
+       return $stmt->fetchAll(PDO::FETCH_ASSOC);
    }
 }
