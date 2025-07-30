@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 /**
  * Utility class containing static helper functions commonly used in the application (redirection, sanitization...)
  */
@@ -11,7 +13,7 @@ class Helpers {
      * @param array $params
      * @return void
      */
-    public static function redirect(string $action, array $params = []) : void
+    #[NoReturn] public static function redirect(string $action, array $params = []) : void
     {
         $url = "index.php?action=$action";
         foreach ($params as $param => $paramValue) {
@@ -33,7 +35,6 @@ class Helpers {
 
     /**
      * @param string $url
-     * @param string $fallback
      * @return string
      */
     public static function sanitizeUrl(string $url) : string

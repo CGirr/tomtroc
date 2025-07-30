@@ -13,8 +13,9 @@ class UserManager extends AbstractEntityManager
      */
     public function addUser(User $user): bool
     {
-        $stmt = $this->db->prepare("INSERT INTO user (login, email, password, register_date)
-                                         VALUES(:login, :email, :password, NOW())");
+        $sql = "INSERT INTO user (login, email, password, register_date)
+                VALUES(:login, :email, :password, NOW())";
+        $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             "login" => $user->getLogin(),
             "email" => $user->getEmail(),
@@ -29,7 +30,8 @@ class UserManager extends AbstractEntityManager
     public function updateUser(User $user): bool
     {
         if(!empty($user->getPassword())) {
-            $stmt = $this->db->prepare("UPDATE user SET login = :login, email = :email, password = :password WHERE id = :id");
+            $sql = "UPDATE user SET login = :login, email = :email, password = :password WHERE id = :id";
+            $stmt = $this->db->prepare($sql);
             return $stmt->execute([
                 "login" => $user->getLogin(),
                 "email" => $user->getEmail(),
@@ -59,6 +61,7 @@ class UserManager extends AbstractEntityManager
      * Checks if a login or email is already used
      * @param string $login
      * @param string $email
+     * @param int|null $excludeUserId
      * @return bool
      */
     public function emailOrLoginExists(string $login, string $email, ?int $excludeUserId = null): bool
@@ -104,7 +107,7 @@ class UserManager extends AbstractEntityManager
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @return User|null
      */
     public function findUserById(int $id): ?User

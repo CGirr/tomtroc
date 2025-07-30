@@ -25,7 +25,12 @@
                 <button class="submit green-button button-text">S'inscrire</button>
             </form>
             <div>
-                <p class="inter-text dark-grey-text">Déjà inscrit ? <a class="submit" href="index.php?action=connectionForm">Connectez-vous</a></p>
+                <p class="inter-text dark-grey-text">
+                    Déjà inscrit ?
+                    <a class="submit" href="index.php?action=connectionForm">
+                        Connectez-vous
+                    </a>
+                </p>
             </div>
         </div>
     </div>

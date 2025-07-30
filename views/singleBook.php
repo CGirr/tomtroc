@@ -13,7 +13,7 @@
         </p>
         <span class="small-text">Propriétaire</span>
         <div class="vendor-block">
-            <img src="<?= Helpers::sanitizeUrl($book['profile_picture']) ?>">
+            <img src="<?= Helpers::sanitizeUrl($book['profile_picture']) ?>" alt="Photo de profil de l'utilisateur">
             <div><?= Helpers::sanitize($book['vendor']) ?></div>
         </div>
         <button class="green-button">

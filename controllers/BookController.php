@@ -7,7 +7,7 @@ class BookController
 {
 
     /**
-     * @return array|null
+     * @return void
      * @throws Exception
      */
     public function showSingleBook(): void
@@ -31,5 +31,10 @@ class BookController
             'action' => $action,
             'book' => $book
         ]);
+    }
+
+    public function showAllBooks(): void
+    {
+        $booksManager = ManagerFactory::getBookManager();
     }
 }

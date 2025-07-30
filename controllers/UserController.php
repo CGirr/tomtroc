@@ -47,6 +47,9 @@ class UserController
     /**
      * @param int $userId
      * @return void
+     * @throws Exception
+     * @throws Exception
+     * @throws Exception
      */
     private function handleAccountUpdate(int $userId) : void
     {
@@ -65,6 +68,9 @@ class UserController
         }
     }
 
+    /**
+     * @throws Exception
+     */
     private function renderAccountView(int $userId, string $error = null, array $formData = null) : void
     {
         $accountData = UserService::getAccountData($userId);

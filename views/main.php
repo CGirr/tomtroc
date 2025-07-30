@@ -17,48 +17,88 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+            rel="stylesheet"
+    >
+    <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+            rel="stylesheet"
+    >
 </head>
 
 <body>
-    <header>
-        <nav class="header-nav inter-text">
-            <div class="nav-container">
-                <div>
-                    <img src="./images/logo.png" alt="logo de TomTroc" class="header-logo">
-                </div>
-                <div class="nav-block-1">
-                    <a href="index.php?action=home" <?= ($action === 'home') ? 'aria-current="page"' : '' ?> class="nav-link-1">Accueil</a>
-                    <a href="#" <?= ($action === 'singleBook') ? 'aria-current="page"' : '' ?>>Nos livres à l'échange</a>
-                </div>
-                <div class="nav-block-2">
-                    <a href="#" class="nav-link-2"><img src="./images/message_icon.png" alt="Icône de messagerie" class="i-message">Messagerie</a>
-                    <a href="index.php?action=account" <?= ($action === 'account') ? 'aria-current="page"' : '' ?> class="nav-link-2"><img src="./images/my_account_icon.png" alt="Icône de compte" class="i-my-account">Mon compte</a>
-                    <?php if (\Helpers::isUserLoggedIn()): ?>
-                        <a href="index.php?action=logout">Déconnexion</a>
-                    <?php else: ?>
-                        <a href="index.php?action=connectionForm" <?= ($action === 'connectionForm') ? 'aria-current="page"' : '' ?>>Connexion</a>
-                    <?php endif; ?>
-                </div>
+<header>
+    <nav class="header-nav inter-text">
+        <div class="nav-container">
+            <div>
+                <img src="./images/logo.png" alt="logo de TomTroc" class="header-logo">
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <?= $content ?>
-    </main>
-
-    <footer>
-        <nav class="footer-nav inter-text">
-            <div class="footer-container">
-                <a href="#" class="dark-grey-text">Politique de confidentialité</a>
-                <a href="#" class="dark-grey-text">Mentions légales</a>
-                <span class="dark-grey-text">Tom Troc&copy;</span>
-                <img src="./images/tt.png" alt="logo TT"
+            <div class="nav-block-1">
+                <a
+                        href="index.php?action=home"
+                    <?= ($action === 'home') ? 'aria-current="page"' : '' ?>
+                        class="nav-link-1"
+                >
+                    Accueil
+                </a>
+                <a
+                        href="index.php?action=allBooks"
+                    <?= ($action === 'singleBook' || $action === 'allBooks') ? 'aria-current="page"' : '' ?>
+                >
+                    Nos livres à l'échange
+                </a>
             </div>
-        </nav>
-    </footer>
+            <div class="nav-block-2">
+                <a href="#" class="nav-link-2">
+                    <img
+                            src="./images/message_icon.png"
+                            alt="Icône de messagerie"
+                            class="i-message"
+                    >
+                    Messagerie
+                </a>
+                <a
+                        href="index.php?action=account"
+                    <?= ($action === 'account') ? 'aria-current="page"' : '' ?>
+                        class="nav-link-2"
+                >
+                    <img
+                            src="./images/my_account_icon.png"
+                            alt="Icône de compte"
+                            class="i-my-account"
+                    >
+                    Mon compte
+                </a>
+                <?php if (Helpers::isUserLoggedIn()): ?>
+                    <a href="index.php?action=logout">Déconnexion</a>
+                <?php else: ?>
+                    <a
+                            href="index.php?action=connectionForm"
+                        <?= ($action === 'connectionForm') ? 'aria-current="page"' : '' ?>
+                    >
+                        Connexion
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <?= $content ?>
+</main>
+
+<footer>
+    <nav class="footer-nav inter-text">
+        <div class="footer-container">
+            <a href="#" class="dark-grey-text">Politique de confidentialité</a>
+            <a href="#" class="dark-grey-text">Mentions légales</a>
+            <span class="dark-grey-text">Tom Troc&copy;</span>
+            <img src="./images/tt.png" alt="logo TT" />
+        </div>
+    </nav>
+</footer>
 
 </body>
 </html>

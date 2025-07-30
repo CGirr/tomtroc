@@ -78,6 +78,9 @@ class UserService
      * @param array $data
      * @return void
      * @throws FormException
+     * @throws Exception
+     * @throws Exception
+     * @throws Exception
      */
     public static function updateProfile(array $data): void
     {

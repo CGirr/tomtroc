@@ -15,32 +15,45 @@ class Router
             'account' => [UserController::class, 'showAccount'],
             'addUser' => [UserController::class, 'registerUser'],
             'singleBook' => [BookController::class, 'showSingleBook'],
+            'allBooks' => [BookController::class, 'showAllBooks'],
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     public function handleRequest(): void
     {
         $action = Helpers::request('action', 'home', 'both');
 
         try {
             if (!array_key_exists($action, $this->routes)) {
-                throw new Exception("Il semblerait que la page demandée n'existe pas.");
+                throw new Exception("Il semblerait que la page demandée n'existe pas.", 404);
             }
 
             [$controllerClass, $method] = $this->routes[$action];
             $controller = new $controllerClass();
 
             if (!method_exists($controller, $method)) {
-                throw new Exception("Méthode introuvable dans le controller : " . get_class($controller) . "::" . $method);
+                throw new Exception(
+                    "Méthode introuvable dans le controller : "
+                    . get_class($controller)
+                    . "::"
+                    . $method,
+                    500);
             }
 
             $controller->$method();
-        } catch (FormException $fe) {
 
         } catch (Exception $exception) {
-            http_response_code(404);
-            $errorView = new View('Erreur 404');
-            $errorView->render('error', ['errorMessage' => $exception->getMessage()]);
+            $code = ($exception->getMessage() === "Il semblerait que la page demandée n'existe pas.") ? 404 : 500;
+            http_response_code($code);
+
+            $errorView = new View("Erreur $code");
+            $errorView->render('error', [
+                'errorMessage' => $exception->getMessage(),
+                'errorCode'    => $code
+            ]);
         }
     }
 }

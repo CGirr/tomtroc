@@ -21,7 +21,8 @@
                             Bibliotheque
                         </div>
                         <div class="library">
-                            <img src="./images/book-icon.png"> <?= Helpers::sanitize($numberOfBooks) ?> livres
+                            <img src="./images/book-icon.png" alt="icône représentant un livre">
+                                <?= Helpers::sanitize($numberOfBooks) ?> livres
                         </div>
                     </div>
                 </div>
@@ -31,14 +32,38 @@
                 <div>
                     <form action="index.php?action=account" method="post" class="my-account-form">
                         <?php if (!empty($error)) : ?>
-                            <div class="danger-text alert-danger"><?= Helpers::sanitize($error) ?></div>
+                            <div class="danger-text alert-danger">
+                                <?= Helpers::sanitize($error) ?>
+                            </div>
                         <?php endif; ?>
+
                         <label for="login" class="inter-text light-grey-text">Pseudo</label>
-                        <input type="text" name="login" id="login" class="inter-text" value="<?= Helpers::sanitize($formData['login'] ?? '') ?>">
+                        <input
+                                type="text"
+                                name="login"
+                                id="login"
+                                class="inter-text"
+                                value="<?= Helpers::sanitize($formData['login'] ?? '') ?>"
+                        >
+
                         <label for="email" class="inter-text light-grey-text">Adresse email</label>
-                        <input type="email" name="email" id="email" class="inter-text" value="<?= Helpers::sanitize($formData['email'] ?? '') ?>">
+                        <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                class="inter-text"
+                                value="<?= Helpers::sanitize($formData['email'] ?? '') ?>"
+                        >
+
                         <label for="password" class="inter-text light-grey-text">Mot de passe</label>
-                        <input type="password" name="password" id="password" class="inter-text" placeholder="•••••••••">
+                        <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                class="inter-text"
+                                placeholder="•••••••••"
+                        >
+
                         <button class="submit dark-grey-button">Enregistrer</button>
                     </form>
                 </div>
@@ -64,11 +89,15 @@
                 <?php foreach ($userBooks as $book): ?>
                     <tr>
                         <td>
-                            <img src="<?= Helpers::sanitizeUrl($book['cover']) ?>">
+                            <img src="<?= Helpers::sanitizeUrl($book['cover']) ?>" alt="couverture du livre">
                         </td>
                         <td><?= Helpers::sanitize($book['title']) ?></td>
                         <td><?= Helpers::sanitize($book['author']) ?></td>
-                        <td class="inter-italic-text"><?= Helpers::sanitize(mb_strimwidth($book['description'], 0, 85, "...")) ?></td>
+                        <td class="inter-italic-text">
+                            <?= Helpers::sanitize(
+                                    mb_strimwidth($book['description'], 0, 85, "...")
+                            ) ?>
+                        </td>
                         <td>
                             <?php if ($book['available']): ?>
                                 <span class="available">disponible</span>
