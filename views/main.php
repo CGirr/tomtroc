@@ -36,14 +36,14 @@
             </div>
             <div class="nav-block-1">
                 <a
-                        href="index.php?action=home"
+                    href="index.php?action=home"
                     <?= ($action === 'home') ? 'aria-current="page"' : '' ?>
-                        class="nav-link-1"
+                    class="nav-link-1"
                 >
                     Accueil
                 </a>
                 <a
-                        href="index.php?action=allBooks"
+                    href="index.php?action=allBooks"
                     <?= ($action === 'singleBook' || $action === 'allBooks') ? 'aria-current="page"' : '' ?>
                 >
                     Nos livres à l'échange
@@ -52,21 +52,21 @@
             <div class="nav-block-2">
                 <a href="#" class="nav-link-2">
                     <img
-                            src="./images/message_icon.png"
-                            alt="Icône de messagerie"
-                            class="i-message"
+                        src="./images/message_icon.png"
+                        alt="Icône de messagerie"
+                        class="i-message"
                     >
                     Messagerie
                 </a>
                 <a
-                        href="index.php?action=account"
+                    href="index.php?action=account"
                     <?= ($action === 'account') ? 'aria-current="page"' : '' ?>
-                        class="nav-link-2"
+                    class="nav-link-2"
                 >
                     <img
-                            src="./images/my_account_icon.png"
-                            alt="Icône de compte"
-                            class="i-my-account"
+                        src="./images/my_account_icon.png"
+                        alt="Icône de compte"
+                        class="i-my-account"
                     >
                     Mon compte
                 </a>
@@ -74,7 +74,7 @@
                     <a href="index.php?action=logout">Déconnexion</a>
                 <?php else: ?>
                     <a
-                            href="index.php?action=connectionForm"
+                        href="index.php?action=connectionForm"
                         <?= ($action === 'connectionForm') ? 'aria-current="page"' : '' ?>
                     >
                         Connexion

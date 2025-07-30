@@ -11,7 +11,7 @@ class BookManager extends AbstractEntityManager
     {
         $sql = "SELECT b.*, u.login as vendor
                 FROM books b
-                JOIN users u ON b.user_id = u.id";
+                JOIN user u ON b.user_id = u.id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 

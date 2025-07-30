@@ -26,15 +26,29 @@ class BookController
         }
 
         $action = Helpers::request('action', 'home', 'get');
-        $view = new View('Single Livre');
-        $view->render("singleBook",[
+
+        $view = new View('Détails du livre');
+        $view->render("singleBook", [
             'action' => $action,
             'book' => $book
         ]);
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function showAllBooks(): void
     {
         $booksManager = ManagerFactory::getBookManager();
+        $books = $booksManager->findAllBooks();
+
+        $action = Helpers::request('action', 'home', 'get');
+
+        $view = new View('Tous nos livres');
+        $view->render("allBooks", [
+            'action' => $action,
+            'books' => $books
+        ]);
     }
 }
