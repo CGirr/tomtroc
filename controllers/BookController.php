@@ -5,6 +5,18 @@
  */
 class BookController
 {
+    private BookService $bookService;
+
+    public function __construct()
+    {
+        $this->bookService = new BookService();
+    }
+
+    /**
+     * @param string $method
+     * @return int
+     * @throws Exception
+     */
     private function getBookId(string $method = 'get'): int
     {
         $id = Helpers::request('id', null, $method);
@@ -22,12 +34,7 @@ class BookController
     public function showSingleBook(): void
     {
         $id = $this->getBookId('get');
-        $booksManager = ManagerFactory::getBookManager();
-        $book = $booksManager->findBookById((int)$id);
-
-        if (!$book) {
-            throw new Exception("Livre introuvable.");
-        }
+        $book = $this->bookService->getBookById($id);
 
         $action = Helpers::request('action', 'home', 'get');
 
@@ -44,8 +51,7 @@ class BookController
      */
     public function showAllBooks(): void
     {
-        $booksManager = ManagerFactory::getBookManager();
-        $books = $booksManager->findAllAvailableBooks();
+        $books = $this->bookService->getAllAvailableBooks();
 
         $action = Helpers::request('action', 'home', 'get');
 
@@ -74,11 +80,13 @@ class BookController
         $this->renderEditBookForm($id);
     }
 
+    /**
+     * @param int $id
+     * @return void
+     * @throws Exception
+     */
     public function handleBookUpdate(int $id): void
     {
-        $bookManager = ManagerFactory::getBookManager();
-        $book = $bookManager->findBookById((int)$id);
-
         $formData = [
             'title' =>  trim(Helpers::request('title', '', 'post')),
             'author' =>  trim(Helpers::request('author', '', 'post')),
@@ -86,47 +94,27 @@ class BookController
             'available' =>  Helpers::request('available', '', 'post'),
         ];
 
-        if(empty($formData['title']) || empty($formData['author'])) {
-            $this->renderEditBookForm($id, "Les champs Titre et Auteur sont obligatoires", $formData);
-            return;
+        try {
+            $this->bookService->updateBook($id, $formData);
+
+            $_SESSION['success'] = "Livre mis à jour avec succès !";
+            Helpers::redirect("editBook&id=$id");
+
+        } catch (Exception $e) {
+            $this->renderEditBookForm($id, $e->getMessage(), $formData);
         }
-
-        if (!in_array($formData['available'], ['0', '1'], true)) {
-            $this->renderEditBookForm($id, "Valeur invalide pour la disponibilité", $formData);
-            return;
-        }
-
-        if (
-            $formData['title'] === $book['title'] &&
-            $formData['author'] === $book['author'] &&
-            $formData['description'] === $book['description'] &&
-            (string)$formData['available'] === (string)$book['available']
-        ) {
-            $this->renderEditBookForm($id, "Aucune modification n'a été apportée", $formData);
-            return;
-        }
-
-        $isUpdated = $bookManager->updateBook(
-            $id,
-            $formData['title'],
-            $formData['author'],
-            $formData['description'],
-            $formData['available']
-        );
-
-        if (!$isUpdated) {
-            $this->renderEditBookForm($id, "La mise à jour a échoué. Veuillez réessayer.", $formData);
-            return;
-        }
-
-        $_SESSION['success'] = "Livre mis à jour avec succès !";
-        Helpers::redirect("editBook&id=$id");
     }
 
+    /**
+     * @param int $id
+     * @param string|null $error
+     * @param array|null $formData
+     * @return void
+     * @throws Exception
+     */
     public function renderEditBookForm(int $id, string $error = null, array $formData = null): void
     {
-        $booksManager = ManagerFactory::getBookManager();
-        $book = $booksManager->findBookById($id);
+        $book = $this->bookService->getBookById($id);
 
         if(!$book) {
             throw new Exception("Livre introuvable.");
@@ -159,12 +147,8 @@ class BookController
         Helpers::checkIfUserIsConnected();
 
         $id = $this->getBookId('post');
-        $booksManager = ManagerFactory::getBookManager();
-        $isDeleted = $booksManager->deleteBook($id);
 
-        if (!$isDeleted) {
-            throw new Exception("La suppression a échouée ou le livre n'existe pas.");
-        }
+        $this->bookService->deleteBook($id);
 
         Helpers::redirect('account');
     }

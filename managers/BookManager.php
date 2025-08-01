@@ -93,12 +93,24 @@ class BookManager extends AbstractEntityManager
         return $stmt->rowCount() > 0;
    }
 
-   public function addBook(Book $book): bool
+    /**
+     * @param Book $book
+     * @return bool
+     */
+    public function addBook(Book $book): bool
    {
 
    }
 
-   public function updateBook(int $id, string $title, string $author, string $description, string $available): bool
+    /**
+     * @param int $id
+     * @param string $title
+     * @param string $author
+     * @param string $description
+     * @param string $available
+     * @return bool
+     */
+    public function updateBook(int $id, string $title, string $author, string $description, string $available): bool
    {
         $sql = "UPDATE books SET title = :title, author = :author, description = :description, available = :available
                 WHERE id = :id";

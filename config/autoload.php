@@ -21,4 +21,8 @@ spl_autoload_register(function ($class)
     if (file_exists(__DIR__ . '/../core/' . $class .'.php')) {
         require __DIR__ . '/../core/' . $class .'.php';
     }
+
+    if (file_exists(__DIR__ . '/../core/services/' . $class .'.php')) {
+        require __DIR__ . '/../core/services/' . $class .'.php';
+    }
 });
