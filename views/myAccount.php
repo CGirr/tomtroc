@@ -3,7 +3,7 @@
 ?>
 <div class="account">
     <section class="my-account">
-        <h1>Mon compte</h1>
+        <h3>Mon compte</h3>
         <div class="my-account-container">
             <article class="member-block-container">
                 <div>
@@ -13,7 +13,7 @@
                     </div>
                     <div class="line-250"></div>
                     <div class="member-block">
-                        <h3><?= Helpers::sanitize($login) ?></h3>
+                        <h4><?= Helpers::sanitize($login) ?></h4>
                         <div class="light-grey-text member-block-years">
                             Membre depuis <?= Helpers::sanitize($registeredSince) ?>
                         </div>
@@ -28,7 +28,7 @@
                 </div>
             </article>
             <article class="my-account-form-container">
-                <h4>Vos informations personnelles</h4>
+                <h5>Vos informations personnelles</h5>
                 <div>
                     <form action="index.php?action=account" method="post" class="my-account-form">
                         <?php if (!empty($error)) : ?>
@@ -36,16 +36,6 @@
                                 <?= Helpers::sanitize($error) ?>
                             </div>
                         <?php endif; ?>
-
-                        <label for="login" class="inter-text light-grey-text">Pseudo</label>
-                        <input
-                                type="text"
-                                name="login"
-                                id="login"
-                                class="inter-text"
-                                value="<?= Helpers::sanitize($formData['login'] ?? '') ?>"
-                        >
-
                         <label for="email" class="inter-text light-grey-text">Adresse email</label>
                         <input
                                 type="email"
@@ -62,6 +52,15 @@
                                 id="password"
                                 class="inter-text"
                                 placeholder="•••••••••"
+                        >
+
+                        <label for="login" class="inter-text light-grey-text">Pseudo</label>
+                        <input
+                                type="text"
+                                name="login"
+                                id="login"
+                                class="inter-text"
+                                value="<?= Helpers::sanitize($formData['login'] ?? '') ?>"
                         >
 
                         <button class="submit dark-grey-button">Enregistrer</button>
@@ -106,8 +105,12 @@
                             <?php endif; ?>
                         </td>
                         <td class="table-actions">
-                            <a href="#">Editer</a>
-                            <a href="#" class="danger-text">Supprimer</a>
+                            <a href="index.php?action=editBook&id=<?= Helpers::sanitize($book['id']) ?>">Éditer</a>
+                            <form method="post" action="index.php?action=deleteBook"
+                                  onsubmit="return confirm('Voulez-vous vraiment supprimer ce livre ?');">
+                                <input type="hidden" name="id" value="<?= Helpers::sanitize($book['id']) ?>">
+                                <button type="submit" class="danger-text">Supprimer</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>

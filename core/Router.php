@@ -16,6 +16,8 @@ class Router
             'addUser' => [UserController::class, 'registerUser'],
             'singleBook' => [BookController::class, 'showSingleBook'],
             'allBooks' => [BookController::class, 'showAllBooks'],
+            'deleteBook' => [BookController::class, 'deleteBook'],
+            'editBook' => [BookController::class, 'showEditBookForm'],
         ];
     }
 
@@ -24,7 +26,7 @@ class Router
      */
     public function handleRequest(): void
     {
-        $action = Helpers::request('action', 'home', 'both');
+        $action = Helpers::request('action', 'home');
 
         try {
             if (!array_key_exists($action, $this->routes)) {

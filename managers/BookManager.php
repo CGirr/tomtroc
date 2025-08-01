@@ -7,11 +7,15 @@
 class BookManager extends AbstractEntityManager
 {
 
-    public function findAllBooks(): ?array
+    /**
+     * @return array|null
+     */
+    public function findAllAvailableBooks(): ?array
     {
         $sql = "SELECT b.*, u.login as vendor
                 FROM books b
-                JOIN user u ON b.user_id = u.id";
+                JOIN user u ON b.user_id = u.id
+                WHERE b.available = 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
@@ -53,7 +57,7 @@ class BookManager extends AbstractEntityManager
      */
     public function findBooksByUserId(int $userId): array
     {
-        $sql = "SELECT cover, title, author, description, available FROM books WHERE user_id = ?";
+        $sql = "SELECT id, cover, title, author, description, available FROM books WHERE user_id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$userId]);
 
@@ -74,5 +78,45 @@ class BookManager extends AbstractEntityManager
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+   }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function deleteBook(int $id): bool
+   {
+        $sql = "DELETE FROM books WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->rowCount() > 0;
+   }
+
+   public function addBook(Book $book): bool
+   {
+
+   }
+
+   public function updateBook(int $id, string $title, string $author, string $description, string $available): bool
+   {
+        $sql = "UPDATE books SET title = :title, author = :author, description = :description, available = :available
+                WHERE id = :id";
+
+        $stmt = $this->db->prepare($sql);
+
+        $success = $stmt->execute([
+            'title' => $title,
+            'author' => $author,
+            'description' => $description,
+            'available' => $available,
+            'id' => $id
+        ]);
+
+        if (!$success) {
+            return false;
+        }
+
+        return $stmt->rowCount() > 0;
    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 ?>
 <span class="single-span small-text-10 weight-300 light-grey-text">
     Nos livres > <?= Helpers::sanitize($book['title']) ?>
@@ -11,9 +12,9 @@
     >
     <article class="single-book-info">
         <h1><?= Helpers::sanitize($book['title']) ?></h1>
-        <h4 class="light-grey-text">
+        <h5 class="light-grey-text">
             par <?= Helpers::sanitize($book['author']) ?>
-        </h4>
+        </h5>
         <div class="line"></div>
 
         <span class="small-text">Description</span>

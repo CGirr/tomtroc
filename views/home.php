@@ -35,9 +35,9 @@
                     <img
                         src="<?= Helpers::sanitizeUrl($book['cover']) ?>"
                         alt="Couverture du livre <?= Helpers::sanitize($book['title']) ?>">
-                    <h4>
+                    <h5>
                         <?= Helpers::sanitize($book['title']) ?>
-                    </h4>
+                    </h5>
                     <div class="inter-text light-grey-text last-added-book-author">
                         <?= Helpers::sanitize($book['author']) ?>
                     </div>

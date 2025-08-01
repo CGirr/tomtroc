@@ -60,7 +60,7 @@
                 </a>
                 <a
                     href="index.php?action=account"
-                    <?= ($action === 'account') ? 'aria-current="page"' : '' ?>
+                    <?= ($action === 'account' || $action === 'editBook') ? 'aria-current="page"' : '' ?>
                     class="nav-link-2"
                 >
                     <img

@@ -38,7 +38,7 @@
 
         <p class="inter-text dark-grey-text">
             Pas de compte ?
-            <a class="submit" href="index.php?action=register">Inscrivez-vous</a>
+            <a class="submit a-login" href="index.php?action=register">Inscrivez-vous</a>
         </p>
     </div>
 

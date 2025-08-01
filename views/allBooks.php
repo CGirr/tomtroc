@@ -18,9 +18,9 @@
                         src="<?= Helpers::sanitizeUrl($book['cover']) ?>"
                         alt="Couverture du livre <?= Helpers::sanitize($book['title']) ?>"
                     >
-                    <h4>
+                    <h5>
                         <?= Helpers::sanitize($book['title']) ?>
-                    </h4>
+                    </h5>
                     <div class="inter-text light-grey-text">
                         <?= Helpers::sanitize($book['author']) ?>
                     </div>
@@ -32,7 +32,7 @@
         <?php endforeach; ?>
     </section>
 
-    <p id="no-results" class="light-grey-text">
+    <p id="no-results" class="no-results-message">
         Aucun livre trouvé.
     </p>
 
@@ -42,10 +42,11 @@
     document.getElementById('bsearch').addEventListener('input', function() {
         const query = this.value.toLowerCase();
         const books = document.querySelectorAll('.book-card');
+        const noResults = document.getElementById('no-results');
         let visibleCount = 0;
 
         books.forEach(book => {
-            const title = book.querySelector('h4').textContent.toLowerCase();
+            const title = book.querySelector('h5').textContent.toLowerCase();
             if (title.includes(query)) {
                 book.style.display = '';
                 visibleCount ++;
@@ -53,7 +54,12 @@
                 book.style.display = 'none';
             }
         });
-        document.getElementById('no-results').style.display = visibleCount === 0 ? 'block' : 'none';
+
+        if (visibleCount === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
     });
 </script>
 

@@ -27,7 +27,7 @@
             <div>
                 <p class="inter-text dark-grey-text">
                     Déjà inscrit ?
-                    <a class="submit" href="index.php?action=connectionForm">
+                    <a class="submit a-login" href="index.php?action=connectionForm">
                         Connectez-vous
                     </a>
                 </p>

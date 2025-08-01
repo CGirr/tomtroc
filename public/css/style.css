@@ -31,6 +31,7 @@ body {
 
 a {
     color: var(--text-dark);
+    text-decoration: none;
 }
 
 a[aria-current="page"] {
@@ -52,12 +53,17 @@ h2 {
 }
 
 h3 {
-    font-size: 24px;
+    font-size: 26px;
 }
 
 h4 {
+    font-size: 24px;
+}
+
+h5 {
     font-family: var(--font-base);
     font-size: 16px;
+    font-weight: 400;
 }
 
 .inter-text {
@@ -97,6 +103,11 @@ h4 {
     padding-bottom: 10px;
 }
 
+.alert-success {
+    margin-top: 10px;
+    color: var(--green);
+}
+
 .button-text {
     font-size: 16px;
     font-weight: 600;
@@ -128,7 +139,6 @@ h4 {
 .header-nav a,
 .footer-nav a {
     color: var(--text-dark);
-    text-decoration: none;
 }
 
 .nav-block-1 {
@@ -223,6 +233,10 @@ h4 {
     width: 720px;
 }
 
+.a-login {
+    text-decoration: underline;
+}
+
 /* Home */
 .accueil {
     display: flex;
@@ -275,21 +289,18 @@ h4 {
     border-radius: 10px;
 }
 
-.last-added-books-container a {
-    text-decoration: none;
-}
-
 .last-added-book img {
     width: 200px;
     height: 200px;
+    object-fit: cover;
 }
 
-.last-added-book h4,
+.last-added-book h5,
 .last-added-book div {
     padding-left: 14px;
 }
 
-.last-added-book h4 {
+.last-added-book h5 {
     padding-top: 20px;
     padding-bottom: 10px;
 }
@@ -412,10 +423,6 @@ input.search-field {
     gap: 38px;
 }
 
-.book-card-container a {
-    text-decoration: none;
-}
-
 .book-card {
     width: 200px;
     height: 324px;
@@ -424,7 +431,7 @@ input.search-field {
     border-radius: 10px;
 }
 
-.book-card h4,
+.book-card h5,
 .book-card div {
     padding-left: 14px;
 }
@@ -435,13 +442,17 @@ input.search-field {
     object-fit: cover;
 }
 
-.book-card h4 {
+.book-card h5 {
     padding-top: 20px;
     margin-bottom: 8px;
 }
 
 .book-card div {
     margin-bottom: 23px;
+}
+
+.no-results-message {
+    display: none;
 }
 
 /* Single Book page */
@@ -475,7 +486,7 @@ input.search-field {
     margin-bottom: 16px;
 }
 
-.single-book-info h4 {
+.single-book-info h5 {
     margin-bottom: 33px;
 }
 
@@ -597,7 +608,7 @@ input.search-field {
     justify-content: start;
 }
 
-.my-account-form-container h4 {
+.my-account-form-container h5 {
     margin-bottom: 26px;
 }
 
@@ -606,17 +617,22 @@ input.search-field {
     flex-direction: column;
 }
 
-.my-account-form label {
+.my-account-form label,
+.edit-book-form label {
     margin-bottom: 10px;
 }
 
-.my-account-form input {
+.my-account-form input,
+.edit-book-form input,
+.edit-book-form select,
+.edit-book-form textarea {
     margin-bottom: 32px;
     height: 50px;
     border: 1px solid var(--border-grey);
     border-radius: 6px;
     background-color: var(--bg-blue-grey);
     padding-left: 15px;
+    padding-right: 15px;
 }
 
 .my-account-form button {
@@ -671,9 +687,26 @@ input.search-field {
     object-fit: cover;
 }
 
-.table-actions a {
+.table-actions {
+    display: flex;
+    justify-content: start;
+    margin-top: 35px;
+}
+
+.table-actions a,
+.table-actions button {
     text-decoration: underline;
     margin-right: 28px;
+    font-size: 12px;
+}
+
+.table-actions button {
+    background: none;
+    border: none;
+}
+
+.table-actions button:hover {
+    cursor: pointer;
 }
 
 .available,
@@ -692,6 +725,79 @@ input.search-field {
 
 .unavailable {
     background-color: rgba(197, 109, 109, 1);
+}
+
+/* Edit form */
+.left-arrow {
+    width: 8px;
+    vertical-align: middle;
+}
+
+.edit-book {
+    background: var(--bg-light);
+    padding: 40px 149px 92px 150px;
+}
+
+.edit-book h3 {
+    margin: 23px 0;
+}
+
+.edit-book-container {
+    width: 1141px;
+    height: 941px;
+    padding: 56px 50px 68px 50px;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    gap: 118px
+}
+
+.edit-book-cover {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-book-cover span {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.edit-book-cover img {
+    width: 488px;
+    height: 488px;
+    margin-bottom: 23px;
+}
+
+.edit-book-cover a {
+    text-decoration: underline;
+    font-size: 12px;
+    justify-content: end;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.edit-book-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-book-form input {
+    width: 435px;
+}
+
+.edit-book-form textarea {
+    resize: none;
+    height: 356px;
+    padding: 16px 12px 34px 14px;
+}
+
+.edit-book-form select {
+    -webkit-appearance: none;
+    background: var(--bg-blue-grey) url("../images/select-arrow.svg") no-repeat 397px;
+    }
+
+.edit-book-form button {
+    width: 322px;
 }
 
 /* Buttons */
