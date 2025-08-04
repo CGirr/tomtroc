@@ -26,6 +26,19 @@ class UserController
         $view->render("registrationForm");
     }
 
+    public function showVendor() : void
+    {
+        $id = Helpers::request('id', null, 'get');
+        $accountData = UserService::getAccountData($id);
+        $availableBooks = UserService::getUserAvailableBooks($id);
+
+        $view = new View('Page du vendeur');
+        $view->render("vendor", [
+            "accountData" => $accountData,
+            "availableBooks" => $availableBooks["availableBooks"],
+        ]);
+    }
+
     /**
      * Displays personal account view
      * @throws Exception

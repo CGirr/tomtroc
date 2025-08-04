@@ -13,9 +13,9 @@
                     Nous croyons en la magie du partage de connaissances et d'histoires à travers les livres.
                 </p>
             </div>
-            <div>
-                <button class="green-button button-text">Découvrir</button>
-            </div>
+
+                <a class="green-button button-text" href="index.php?action=allBooks">Découvrir</a>
+
         </div>
         <div>
             <figure>
@@ -47,9 +47,7 @@
                 </a>
             <?php endforeach; ?>
         </div>
-        <div>
-            <button class="green-button button-text">Voir tous les livres</button>
-        </div>
+        <a href="index.php?action=allBooks" class="green-button button-text">Voir tous les livres</a>
     </div>
 </section>
 <section class="how-to-section">
@@ -84,9 +82,8 @@
                </article>
            </div>
        </div>
-       <div>
-           <button class="dark-grey-button button-text">Voir tous les livres</button>
-       </div>
+       <a href="index.php?action=allBooks" class="dark-grey-button button-text">Voir tous les livres</a>
+
    </div>
 </section>
 <img src="./images/clay-banks.png" alt="Image d'une bibliothèque" class="clay-img">

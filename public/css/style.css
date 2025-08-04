@@ -34,6 +34,10 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    font-weight: bold;
+}
+
 a[aria-current="page"] {
     font-weight: bold;
 }
@@ -237,6 +241,10 @@ h5 {
     text-decoration: underline;
 }
 
+.a-login:hover {
+    font-weight: normal;
+}
+
 /* Home */
 .accueil {
     display: flex;
@@ -255,8 +263,9 @@ h5 {
     gap: 14px;
 }
 
-.accueil button {
+.accueil a {
     margin-top: 26px;
+    width: 152px;
 }
 
 /* Sections */
@@ -287,6 +296,7 @@ h5 {
     background-color: white;
     box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.01);
     border-radius: 10px;
+    padding-bottom: 64px;
 }
 
 .last-added-book img {
@@ -431,6 +441,10 @@ input.search-field {
     border-radius: 10px;
 }
 
+.book-card a:hover {
+    font-weight: normal;
+}
+
 .book-card h5,
 .book-card div {
     padding-left: 14px;
@@ -465,18 +479,18 @@ input.search-field {
 
 .single-container {
     display: flex;
-    height: 863px;
+    min-height: 863px;
     width: 1440px;
 }
 
 .single-container img {
     object-fit: cover;
+    width: 720px;
 }
 
 .single-book-info {
     justify-content: start;
     background-color: var(--bg-light);
-    height: 863px;
     width: 720px;
     padding-left: 85px;
     padding-top: 49px;
@@ -502,9 +516,22 @@ input.search-field {
     margin-bottom: 16px;
 }
 
+.single-book-info a {
+    display: block;
+    width: 0;
+}
+
+.single-book-info a:hover {
+    font-weight: normal;
+}
+
 .single-book-info p {
     margin-bottom: 22px;
     padding-right: 150px;
+}
+
+.vendor-block:hover {
+    color: var(--green);
 }
 
 .vendor-block {
@@ -520,8 +547,11 @@ input.search-field {
 }
 
 .vendor-block img {
-    padding: 6px 15px 6px 6px;
-    height: 60px;
+    margin: 6px 15px 6px 6px;
+    height: 48px;
+    width: 48px;
+    border-radius: 25%;
+    object-fit: cover;
 }
 
 .single-book-info button {
@@ -646,6 +676,10 @@ input.search-field {
     border-radius: 20px;
     width: 100%;
     max-width: 1140px;
+}
+
+#books,
+#vendor-library {
     border-collapse: separate;
     border-spacing: 0;
     overflow: hidden;
@@ -657,19 +691,23 @@ input.search-field {
     vertical-align: middle;
 }
 
-#books td {
+#books td,
+#vendor-library td {
     font-size: 12px;
     padding: 25px 80px 25px 0;
 }
 
-#books th {
+#books th,
+#vendor-library th {
     padding: 33px 0 9px 0;
     text-align: left;
     border-bottom: 1px solid var(--border-grey);
 }
 
 #books th:first-child,
-#books td:first-child {
+#books td:first-child,
+#vendor-library th:first-child,
+#vendor-library td:first-child {
     padding-left: 66px;
 }
 
@@ -677,11 +715,13 @@ input.search-field {
     padding-right: 0;
 }
 
-#books tr:nth-child(even) {
+#books tr:nth-child(even),
+#vendor-library tr:nth-child(even) {
     background-color: var(--bg-blue-grey) ;
 }
 
-#books img {
+#books img,
+#vendor-library img {
     height: 78px;
     width: 78px;
     object-fit: cover;
@@ -799,6 +839,70 @@ input.search-field {
 .edit-book-form button {
     width: 322px;
 }
+
+/* Vendor page */
+.public-account-container {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    padding: 103px 0 214px 0;
+    background: var(--bg-light);
+}
+
+.vendor-info-block {
+    width: 341px;
+    background: white;
+    border-radius: 20px;
+    padding: 48px 0 56px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.vendor-profile-picture {
+    width: 135px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.vendor-info-block h4 {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.member-since {
+    margin-bottom: 21px;
+}
+
+.vendor-info-block > .library {
+    margin-bottom: 5px;
+}
+
+.vendor-info-block > .book-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 45px;
+}
+
+.vendor-info-block button {
+    width: 215px;
+    padding: 22px 0;
+}
+
+.vendor-library-block {
+    width: 771px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 
 /* Buttons */
 .green-button {

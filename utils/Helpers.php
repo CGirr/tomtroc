@@ -70,7 +70,7 @@ class Helpers {
                 return $default;
         }
 
-        return is_string($value) ? htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8') : $value;
+        return is_string($value) ? trim($value) : $value;
     }
 
     /**

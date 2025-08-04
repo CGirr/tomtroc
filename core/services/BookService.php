@@ -23,7 +23,7 @@ class BookService
     public function updateBook(int $id, array $formData): void
     {
         $bookManager = ManagerFactory::getBookManager();
-        $book = $bookManager->findBookById((int)$id);
+        $book = $bookManager->findBookById($id);
 
         if (!$book) {
             throw new Exception("Livre introuvable.");

@@ -92,7 +92,7 @@
                         </td>
                         <td><?= Helpers::sanitize($book['title']) ?></td>
                         <td><?= Helpers::sanitize($book['author']) ?></td>
-                        <td class="inter-italic-text">
+                        <td class="italic-text">
                             <?= Helpers::sanitize(
                                     mb_strimwidth($book['description'], 0, 85, "...")
                             ) ?>

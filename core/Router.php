@@ -18,6 +18,7 @@ class Router
             'allBooks' => [BookController::class, 'showAllBooks'],
             'deleteBook' => [BookController::class, 'deleteBook'],
             'editBook' => [BookController::class, 'showEditBookForm'],
+            'vendor' => [UserController::class, 'showVendor'],
         ];
     }
 

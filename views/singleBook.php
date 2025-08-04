@@ -18,7 +18,7 @@
         <div class="line"></div>
 
         <span class="small-text">Description</span>
-        <p>
+        <p class="inter-text">
             <?php if (!empty($book['description'])) : ?>
                 <?= nl2br(Helpers::sanitize($book['description'])) ?>
             <?php else : ?>
@@ -27,13 +27,18 @@
         </p>
 
         <span class="small-text">Propriétaire</span>
-        <div class="vendor-block">
-            <img
-                src="<?= Helpers::sanitizeUrl($book['profile_picture']) ?>"
-                alt="Photo de profil de l'utilisateur"
-            >
-            <div><?= Helpers::sanitize($book['vendor']) ?></div>
-        </div>
+        <a href="index.php?action=vendor&id=<?= $book['vendor_id'] ?>">
+            <div class="vendor-block">
+                <img
+                        src="<?= Helpers::sanitizeUrl($book['profile_picture']) ?>"
+                        alt="Photo de profil de l'utilisateur"
+                >
+                <div>
+                    <?= Helpers::sanitize($book['vendor']) ?>
+                </div>
+            </div>
+        </a>
+
 
         <button class="green-button">
             Envoyer un message

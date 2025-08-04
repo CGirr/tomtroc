@@ -12,12 +12,23 @@ class BookManager extends AbstractEntityManager
      */
     public function findAllAvailableBooks(): ?array
     {
-        $sql = "SELECT b.*, u.login as vendor
+        $sql = "SELECT b.*, u.login as vendor 
                 FROM books b
                 JOIN user u ON b.user_id = u.id
                 WHERE b.available = 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findAvailableBooksByUserId($userId): ?array
+    {
+        $sql = "SELECT * FROM books
+                WHERE user_id = :userId
+                AND available = 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(["userId" => $userId]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -28,7 +39,7 @@ class BookManager extends AbstractEntityManager
      */
     public function findBookById(int $id): ?array
     {
-        $sql = "SELECT b.*, u.login as vendor, u.profile_picture as profile_picture
+        $sql = "SELECT b.*, u.login as vendor, u.profile_picture as profile_picture, u.id as vendor_id
                 FROM books b
                 JOIN user u ON b.user_id = u.id
                 WHERE b.id = :id";

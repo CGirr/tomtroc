@@ -142,4 +142,17 @@ class UserService
             'userBooks' => $bookManager->findBooksByUserId($userId)
         ];
     }
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public static function getUserAvailableBooks(int $userId): array
+    {
+        $bookManager = ManagerFactory::getBookManager();
+
+        return [
+            'availableBooks' => $bookManager->findAvailableBooksByUserId($userId)
+        ];
+    }
 }
