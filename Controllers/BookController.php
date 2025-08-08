@@ -5,8 +5,14 @@
  */
 class BookController
 {
+    /**
+     * @var BookService
+     */
     private BookService $bookService;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->bookService = new BookService();
@@ -87,12 +93,7 @@ class BookController
      */
     public function handleBookUpdate(int $id): void
     {
-        $formData = [
-            'title' =>  trim(Helpers::request('title', '', 'post')),
-            'author' =>  trim(Helpers::request('author', '', 'post')),
-            'description' =>  trim(Helpers::request('description', '', 'post')),
-            'available' =>  Helpers::request('available', '', 'post'),
-        ];
+        $formData = $this->bookService->extractBookFormData();
 
         try {
             $this->bookService->updateBook($id, $formData);
@@ -114,25 +115,7 @@ class BookController
      */
     public function renderEditBookForm(int $id, string $error = null, array $formData = null): void
     {
-        $book = $this->bookService->getBookById($id);
-
-        if(!$book) {
-            throw new Exception("Livre introuvable.");
-        }
-
-        if ($formData === null) {
-            $formData = $book;
-        } else {
-            $formData = array_merge($book, $formData);
-        }
-
-        $viewData = [
-            'book' => $formData,
-            'error' => $error,
-            'success' => $_SESSION['success'] ?? null,
-        ];
-
-        unset($_SESSION['success']);
+        $viewData = $this->bookService->prepareBookEditData($id, $formData, $error);
 
         $view = new View('Modifier le livre');
         $view->render("editBookForm", $viewData);

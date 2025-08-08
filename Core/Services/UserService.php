@@ -89,7 +89,7 @@ class UserService
         $password = $data['password'] ?? '';
 
         if (empty($login) || empty($email)) {
-            throw new FormException("Le login et l'email sont obligatoires");
+            throw new Exception("Le login et l'email sont obligatoires");
         }
 
         $userManager = ManagerFactory::getUserManager();
@@ -154,5 +154,36 @@ class UserService
         return [
             'availableBooks' => $bookManager->findAvailableBooksByUserId($userId)
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function extractAccountFormData(): array
+    {
+        return [
+            'login' => Helpers::request('login', 'account', 'post'),
+            'email' => Helpers::request('email', 'account', 'post'),
+            'password' => Helpers::request('password', 'account', 'post'),
+        ];
+    }
+
+    public static function prepareAccountViewData(int $userId, ?string $error = null, ?array $formData = null): array
+    {
+        $accountData = self::getAccountData($userId);
+
+        if ($formData === null) {
+            $formData = [
+                'login' => $_SESSION['user']['login'],
+                'email' => $_SESSION['user']['email'],
+                'password' => ''
+            ];
+        }
+
+        return array_merge($accountData, [
+            'error' => $error,
+            'formData' => $formData,
+            'action' => Helpers::request('action', 'account', 'post')
+        ]);
     }
 }

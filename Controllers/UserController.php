@@ -51,7 +51,6 @@ class UserController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->handleAccountUpdate($userId);
-            exit;
         }
 
         $this->renderAccountView($userId);
@@ -66,16 +65,12 @@ class UserController
      */
     private function handleAccountUpdate(int $userId) : void
     {
-        $formData = [
-            'login' => Helpers::request('login', 'account', 'post'),
-            'email' => Helpers::request('email', 'account', 'post'),
-            'password' => Helpers::request('password', 'account', 'post'),
-        ];
+        $formData = UserService::extractAccountFormData();
 
         try {
             UserService::updateProfile($formData);
             Helpers::redirect('account');
-            exit;
+
         } catch (Exception $e) {
             $this->renderAccountView($userId, $e->getMessage(), $formData);
         }
@@ -86,21 +81,7 @@ class UserController
      */
     private function renderAccountView(int $userId, string $error = null, array $formData = null) : void
     {
-        $accountData = UserService::getAccountData($userId);
-
-        if ($formData === null) {
-            $formData = [
-                'login' => $_SESSION['user']['login'],
-                'email' => $_SESSION['user']['email'],
-                'password' => ''
-            ];
-        }
-
-        $viewData = array_merge($accountData, [
-            'error' => $error,
-            'formData' => $formData,
-            'action' => Helpers::request('action', 'account', 'post')
-        ]);
+        $viewData = UserService::prepareAccountViewData($userId, $error, $formData);
 
         $view = new View('Mon compte');
         $view->render('myAccount', $viewData);
@@ -123,7 +104,6 @@ class UserController
                 UserService::register($login, $email, $password);
 
                 Helpers::redirect('login');
-                exit;
 
             } catch (Exception $e) {
                 $error = $e->getMessage();
@@ -156,7 +136,7 @@ class UserController
                 UserService::login($email, $password);
 
                 Helpers::redirect('account');
-                exit;
+
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }

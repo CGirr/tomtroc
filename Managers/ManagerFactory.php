@@ -2,7 +2,7 @@
 
 /**
  * Class ManagerFactory
- * Provides centralized access to entity managers
+ * Provides centralized access to entity Managers
  */
 class ManagerFactory
 {

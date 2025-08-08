@@ -35,11 +35,11 @@ a {
 }
 
 a:hover {
-    font-weight: bold;
+    text-shadow: 1px 0 0 currentColor;
 }
 
 a[aria-current="page"] {
-    font-weight: bold;
+    text-shadow: 1px 0 0 currentColor;
 }
 
 h1, h2, h3, h4 {
@@ -242,7 +242,7 @@ h5 {
 }
 
 .a-login:hover {
-    font-weight: normal;
+    text-shadow: none;
 }
 
 /* Home */
@@ -442,7 +442,7 @@ input.search-field {
 }
 
 .book-card a:hover {
-    font-weight: normal;
+    text-shadow: none;
 }
 
 .book-card h5,
@@ -522,7 +522,7 @@ input.search-field {
 }
 
 .single-book-info a:hover {
-    font-weight: normal;
+    text-shadow: none;
 }
 
 .single-book-info p {
@@ -926,4 +926,5 @@ input.search-field {
     background-color: var(--dark-green);
     color: white;
     border-color: var(--dark-green);
+    cursor: pointer;
 }

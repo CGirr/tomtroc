@@ -22,7 +22,7 @@ class Router
         ];
     }
 
-    /**
+    /** Handles the HTTP request and sends it to the correct controller and method
      * @throws Exception
      */
     public function handleRequest(): void
@@ -30,13 +30,17 @@ class Router
         $action = Helpers::request('action', 'home');
 
         try {
+            // Check if the action exists in the route list
             if (!array_key_exists($action, $this->routes)) {
                 throw new Exception("Il semblerait que la page demandée n'existe pas.", 404);
             }
 
+            // Extract the controller class and method name from the route
             [$controllerClass, $method] = $this->routes[$action];
+
             $controller = new $controllerClass();
 
+            // Check if the method exists in the controller class
             if (!method_exists($controller, $method)) {
                 throw new Exception(
                     "Méthode introuvable dans le controller : "
@@ -49,9 +53,11 @@ class Router
             $controller->$method();
 
         } catch (Exception $exception) {
+            // Set the HTTP response code based on the error type
             $code = ($exception->getMessage() === "Il semblerait que la page demandée n'existe pas.") ? 404 : 500;
             http_response_code($code);
 
+            // Render an error view with the message and error code
             $errorView = new View("Erreur $code");
             $errorView->render('error', [
                 'errorMessage' => $exception->getMessage(),
