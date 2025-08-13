@@ -58,7 +58,7 @@ class UserService
 
         // Checks if login or email is already used
         if ($userManager->emailOrLoginExists($login, $email)) {
-            throw new FormException("Ce login ou cet email est déjà utilisé");
+            throw new Exception("Ce login ou cet email est déjà utilisé");
         }
 
         $user = new User([
@@ -77,9 +77,6 @@ class UserService
      * Updates a user
      * @param array $data
      * @return void
-     * @throws FormException
-     * @throws Exception
-     * @throws Exception
      * @throws Exception
      */
     public static function updateProfile(array $data): void
@@ -93,7 +90,8 @@ class UserService
         }
 
         $userManager = ManagerFactory::getUserManager();
-        $user = $userManager->findUserById($_SESSION['user']['id']);
+        $userId = Helpers::getCurrentUserId();
+        $user = $userManager->findUserById($userId);
 
         if (!$user) {
             throw new Exception("Cet utilisateur n'existe pas.");
@@ -162,12 +160,18 @@ class UserService
     public static function extractAccountFormData(): array
     {
         return [
-            'login' => Helpers::request('login', 'account', 'post'),
-            'email' => Helpers::request('email', 'account', 'post'),
-            'password' => Helpers::request('password', 'account', 'post'),
+            'login' => Helpers::getParameter('login', 'account', 'post'),
+            'email' => Helpers::getParameter('email', 'account', 'post'),
+            'password' => Helpers::getParameter('password', 'account', 'post'),
         ];
     }
 
+    /**
+     * @param int $userId
+     * @param string|null $error
+     * @param array|null $formData
+     * @return array
+     */
     public static function prepareAccountViewData(int $userId, ?string $error = null, ?array $formData = null): array
     {
         $accountData = self::getAccountData($userId);
@@ -183,7 +187,7 @@ class UserService
         return array_merge($accountData, [
             'error' => $error,
             'formData' => $formData,
-            'action' => Helpers::request('action', 'account', 'post')
+            'action' => Helpers::getParameter('action', 'account', 'post')
         ]);
     }
 }

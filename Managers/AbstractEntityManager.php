@@ -5,11 +5,16 @@
  */
 abstract class AbstractEntityManager
 {
-
+    /**
+     * @var PDO
+     */
     protected PDO $db;
 
-    public function __construct()
+    /**
+     * @param PDO $db
+     */
+    public function __construct(PDO $db)
     {
-        $this->db = DBManager::getInstance()->getConnection();
+        $this->db = $db;
     }
 }

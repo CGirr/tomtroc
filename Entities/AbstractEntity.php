@@ -5,8 +5,14 @@
  */
 abstract class AbstractEntity
 {
+    /**
+     * @var int|null
+     */
     protected ?int $id = null;
 
+    /**
+     * @param array $data
+     */
     public function __construct(array $data = [])
     {
         if (!empty($data)) {

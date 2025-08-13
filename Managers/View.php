@@ -10,7 +10,7 @@ class View
      */
     private string $title;
 
-    /** Constructor
+    /**
      * @param string $title
      */
     public function __construct(string $title)
@@ -27,10 +27,10 @@ class View
     public function render(string $viewName, array $params = []): void
     {
         $viewPath = $this->buildViewPath($viewName);
-
         $content = $this->_renderViewFromTemplate($viewPath, $params);
         $title = $this->title;
         $action = $params['action'] ?? '';
+
         ob_start();
         require(MAIN_VIEW_PATH);
         echo ob_get_clean();

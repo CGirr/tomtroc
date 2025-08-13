@@ -11,13 +11,14 @@ class UserController
      */
     public function showConnectionForm() : void
     {
-        $action = Helpers::request('action', 'connectionForm', 'get');
+        $action = Helpers::getParameter('action', 'connectionForm', 'get');
         $view = new View('Connexion');
         $view->render("connectionForm", ["action" => $action]);
     }
 
     /**
      * Displays the registration form
+     * @return void
      * @throws Exception
      */
     public function showRegistrationForm() : void
@@ -26,9 +27,13 @@ class UserController
         $view->render("registrationForm");
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function showVendor() : void
     {
-        $id = Helpers::request('id', null, 'get');
+        $id = Helpers::getParameter('id', null, 'get');
         $accountData = UserService::getAccountData($id);
         $availableBooks = UserService::getUserAvailableBooks($id);
 
@@ -41,13 +46,14 @@ class UserController
 
     /**
      * Displays personal account view
+     * @return void
      * @throws Exception
      */
     public function showAccount(): void
     {
         Helpers::checkIfUserIsConnected();
 
-        $userId = $_SESSION['user']['id'];
+        $userId = Helpers::getCurrentUserId();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->handleAccountUpdate($userId);
@@ -60,8 +66,6 @@ class UserController
      * @param int $userId
      * @return void
      * @throws Exception
-     * @throws Exception
-     * @throws Exception
      */
     private function handleAccountUpdate(int $userId) : void
     {
@@ -70,13 +74,16 @@ class UserController
         try {
             UserService::updateProfile($formData);
             Helpers::redirect('account');
-
         } catch (Exception $e) {
             $this->renderAccountView($userId, $e->getMessage(), $formData);
         }
     }
 
     /**
+     * @param int $userId
+     * @param string|null $error
+     * @param array|null $formData
+     * @return void
      * @throws Exception
      */
     private function renderAccountView(int $userId, string $error = null, array $formData = null) : void
@@ -97,14 +104,13 @@ class UserController
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             try {
-                $login = Helpers::request("login");
-                $email = Helpers::request("email");
-                $password = Helpers::request("password");
+                $login = Helpers::getParameter("login", null, 'post');
+                $email = Helpers::getParameter("email", null, 'post');
+                $password = Helpers::getParameter("password", null, 'post');
 
                 UserService::register($login, $email, $password);
 
                 Helpers::redirect('login');
-
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
@@ -130,23 +136,25 @@ class UserController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                $email = Helpers::request('email', null, 'post');
-                $password = Helpers::request('password', null, 'post');
+                $email = Helpers::getParameter('email', null, 'post');
+                $password = Helpers::getParameter('password', null, 'post');
 
                 UserService::login($email, $password);
 
                 Helpers::redirect('account');
-
             } catch (Exception $e) {
                 $error = $e->getMessage();
             }
         }
 
         $view = new View("Connexion");
-        $view->render("connectionForm", [
-            'error' => $error,
-            'formData' => ['email' => $email ?? '', 'password' => '']
-        ]);
+        $view->render(
+            "connectionForm",
+            [
+                'error' => $error,
+                'formData' => ['email' => $email ?? '', 'password' => '']
+            ]
+        );
     }
 
     /**

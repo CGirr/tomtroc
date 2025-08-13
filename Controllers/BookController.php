@@ -1,18 +1,12 @@
 <?php
 
-/**
- *
- */
 class BookController
 {
     /**
-     * @var BookService
+     * @var BookService $bookService
      */
     private BookService $bookService;
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->bookService = new BookService();
@@ -25,8 +19,8 @@ class BookController
      */
     private function getBookId(string $method = 'get'): int
     {
-        $id = Helpers::request('id', null, $method);
-        if (!$id) {
+        $id = Helpers::getParameter('id', null, $method);
+        if ($id === null) {
             throw new Exception("L'id du livre est manquant");
         }
 
@@ -39,10 +33,10 @@ class BookController
      */
     public function showSingleBook(): void
     {
-        $id = $this->getBookId('get');
+        $id = $this->getBookId();
         $book = $this->bookService->getBookById($id);
 
-        $action = Helpers::request('action', 'home', 'get');
+        $action = Helpers::getParameter('action', 'home', 'get');
 
         $view = new View('Détails du livre');
         $view->render("singleBook", [
@@ -59,13 +53,16 @@ class BookController
     {
         $books = $this->bookService->getAllAvailableBooks();
 
-        $action = Helpers::request('action', 'home', 'get');
+        $action = Helpers::getParameter('action', 'home', 'get');
 
         $view = new View('Tous nos livres');
-        $view->render("allBooks", [
-            'action' => $action,
-            'books' => $books
-        ]);
+        $view->render(
+            "allBooks",
+            [
+                'action' => $action,
+                'books' => $books
+            ]
+        );
     }
 
     /**
@@ -77,12 +74,12 @@ class BookController
         Helpers::checkIfUserIsConnected();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = Helpers::request('id', null, 'post');
+            $id = Helpers::getParameter('id', null, 'post');
             $this->handleBookUpdate((int)$id);
             return;
         }
 
-        $id = $this->getBookId('get');
+        $id = $this->getBookId();
         $this->renderEditBookForm($id);
     }
 
@@ -100,7 +97,6 @@ class BookController
 
             $_SESSION['success'] = "Livre mis à jour avec succès !";
             Helpers::redirect("editBook&id=$id");
-
         } catch (Exception $e) {
             $this->renderEditBookForm($id, $e->getMessage(), $formData);
         }

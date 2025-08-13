@@ -119,6 +119,3 @@
         <?php endif; ?>
     </section>
 </div>
-
-
-

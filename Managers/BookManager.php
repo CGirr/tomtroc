@@ -6,7 +6,6 @@
  */
 class BookManager extends AbstractEntityManager
 {
-
     /**
      * @return array|null
      */
@@ -14,14 +13,18 @@ class BookManager extends AbstractEntityManager
     {
         $sql = "SELECT b.*, u.login as vendor 
                 FROM books b
-                JOIN user u ON b.user_id = u.id
+                INNER JOIN user u ON b.user_id = u.id
                 WHERE b.available = 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
 
+    /**
+     * @param $userId
+     * @return array|null
+     */
     public function findAvailableBooksByUserId($userId): ?array
     {
         $sql = "SELECT * FROM books
@@ -30,7 +33,7 @@ class BookManager extends AbstractEntityManager
         $stmt = $this->db->prepare($sql);
         $stmt->execute(["userId" => $userId]);
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
 
     /**
@@ -41,11 +44,11 @@ class BookManager extends AbstractEntityManager
     {
         $sql = "SELECT b.*, u.login as vendor, u.profile_picture as profile_picture, u.id as vendor_id
                 FROM books b
-                JOIN user u ON b.user_id = u.id
+                INNER JOIN user u ON b.user_id = u.id
                 WHERE b.id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
-        $book = $stmt->fetch(PDO::FETCH_ASSOC);
+        $book = $stmt->fetch();
 
         return $book ?: null;
     }
@@ -72,7 +75,7 @@ class BookManager extends AbstractEntityManager
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$userId]);
 
-       return $stmt->fetchAll(PDO::FETCH_ASSOC);
+       return $stmt->fetchAll();
    }
 
     /**
@@ -82,13 +85,13 @@ class BookManager extends AbstractEntityManager
     {
         $sql = "SELECT b.*, u.login as vendor
                 FROM books b
-                JOIN user u ON b.user_id = u.id
+                INNER JOIN user u ON b.user_id = u.id
                 ORDER BY created_at DESC 
                 LIMIT 4";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
    }
 
     /**
@@ -104,14 +107,14 @@ class BookManager extends AbstractEntityManager
         return $stmt->rowCount() > 0;
    }
 
-    /**
-     * @param Book $book
-     * @return bool
-     */
-    public function addBook(Book $book): bool
-   {
-
-   }
+//    /**
+//     * @param Book $book
+//     * @return bool
+//     */
+//    public function addBook(Book $book): bool
+//   {
+//
+//   }
 
     /**
      * @param int $id

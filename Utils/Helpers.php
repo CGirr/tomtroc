@@ -1,11 +1,8 @@
 <?php
 
-use JetBrains\PhpStorm\NoReturn;
-
 /**
  * Utility class containing static helper functions commonly used in the application (redirection, sanitization...)
  */
-
 class Helpers {
 
     /**
@@ -13,14 +10,14 @@ class Helpers {
      * @param array $params
      * @return void
      */
-    #[NoReturn] public static function redirect(string $action, array $params = []) : void
+    public static function redirect(string $action, array $params = []) : void
     {
         $url = "index.php?action=$action";
         foreach ($params as $param => $paramValue) {
             $url .= "&$param=$paramValue";
         }
         header("Location: $url");
-        exit();
+        exit;
     }
 
     /**
@@ -48,7 +45,7 @@ class Helpers {
      * @param string $method
      * @return mixed
      */
-    public static function request(mixed $key, mixed $default = null, string $method = 'both') : mixed
+    public static function getParameter(mixed $key, mixed $default = null, string $method = 'both') : mixed
     {
         switch(strtolower($method)) {
             case 'get':
@@ -58,13 +55,7 @@ class Helpers {
                 $value = $_POST[$key] ?? $default;
                 break;
             case 'both' :
-                if (isset($_GET[$key])) {
-                    $value = $_GET[$key];
-                } elseif (isset($_POST[$key])) {
-                    $value = $_POST[$key];
-                } else {
-                    $value = $default;
-                }
+                $value = $_GET[$key] ?? $_POST[$key] ?? $default;
                 break;
             default :
                 return $default;
@@ -99,5 +90,13 @@ class Helpers {
         if(!isset($_SESSION['user'])) {
             self::redirect("connectionForm");
         }
+    }
+
+    /**
+     * @return int|null
+     */
+    public static function getCurrentUserId(): ?int
+    {
+        return $_SESSION['user']['id'] ?? null;
     }
 }

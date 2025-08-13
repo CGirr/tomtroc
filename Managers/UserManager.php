@@ -49,15 +49,6 @@ class UserManager extends AbstractEntityManager
     }
 
     /**
-     * @param User $user
-     * @return bool
-     */
-    public function deleteUser(User $user): bool
-    {
-
-    }
-
-    /**
      * Checks if a login or email is already used
      * @param string $login
      * @param string $email
@@ -126,3 +117,4 @@ class UserManager extends AbstractEntityManager
         return null;
     }
 }
+

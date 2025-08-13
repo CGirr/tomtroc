@@ -15,7 +15,7 @@ class BookService
         $booksManager = ManagerFactory::getBookManager();
         $book = $booksManager->findBookById($id);
 
-        if (!$book) {
+        if ($book === null) {
             throw new Exception("Livre introuvable.");
         }
 
@@ -41,7 +41,7 @@ class BookService
     {
         $book = $this->getBookById($id);
 
-        if (!$book) {
+        if ($book === null) {
             throw new Exception("Livre introuvable.");
         }
 
@@ -82,10 +82,10 @@ class BookService
     public function extractBookFormData(): array
     {
         return [
-            'title' =>  trim(Helpers::request('title', '', 'post')),
-            'author' =>  trim(Helpers::request('author', '', 'post')),
-            'description' =>  trim(Helpers::request('description', '', 'post')),
-            'available' =>  Helpers::request('available', '', 'post'),
+            'title' =>  trim(Helpers::getParameter('title', '', 'post')),
+            'author' =>  trim(Helpers::getParameter('author', '', 'post')),
+            'description' =>  trim(Helpers::getParameter('description', '', 'post')),
+            'available' =>  Helpers::getParameter('available', '', 'post'),
         ];
     }
 
@@ -136,10 +136,9 @@ class BookService
             $formData['title'] === $book['title'] &&
             $formData['author'] === $book['author'] &&
             $formData['description'] === $book['description'] &&
-            (string)$formData['available'] === (string)$book['available']
+            $formData['available'] === (string)$book['available']
         ) {
             throw new Exception("Aucune modification n'a été apportée");
         }
-
     }
 }

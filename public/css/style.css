@@ -78,6 +78,10 @@ h5 {
     font-style: italic;
 }
 
+.bold-text {
+    font-weight: 600;
+}
+
 .medium-text {
     font-size: 12px;
 }
@@ -903,6 +907,131 @@ input.search-field {
     height: 100%;
 }
 
+/* Messaging */
+.messaging-container {
+    display: flex;
+    padding-left: 150px;
+}
+
+.conversations-container {
+    display: flex;
+    flex-direction: column;
+    width: 308px;
+    background-color: var(--bg-light);
+    min-height: 893px;
+}
+
+.conversations-container a:hover {
+    text-shadow: none;
+    background-color: white;
+}
+
+.conversations-container h3 {
+    padding: 55px 143px 27px 34px;
+}
+
+.conversations-cards-container {
+    display: flex;
+    padding: 18px 42px 18px 34px;
+}
+
+.conversations-cards-container img,
+.messages-container img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 12px;
+}
+
+.conversation-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.conversation-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.conversation-info-message {
+ flex-shrink: 0;
+}
+
+.messages-container {
+    padding: 35px 150px 98px 44px;
+    display: flex;
+    flex-direction: column;
+    width: 1094px;
+}
+
+.messages-sender-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.messages {
+    margin-top: auto;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.message-info img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.message-content {
+    padding: 10px 18px;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    border-radius: 3px;
+}
+
+.mine {
+    align-self: flex-end;
+
+}
+
+.mine > .message-content {
+    background-color: var(--bg-blue-grey);
+}
+
+.theirs {
+    align-self: flex-start;
+}
+
+.theirs > .message-content {
+    background-color: white;
+}
+
+.message-form {
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+}
+
+.message-form input {
+    flex: 1;
+    border-radius: 6px;
+    border: 1px var(--border-grey);
+    padding: 16px 42px;
+}
+
+.message-form button {
+    height: 49px;
+    width: 132px;
+    padding: 0;
+    margin-left: 21px;
+}
 
 /* Buttons */
 .green-button {
