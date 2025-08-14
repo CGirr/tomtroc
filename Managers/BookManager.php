@@ -107,15 +107,6 @@ class BookManager extends AbstractEntityManager
         return $stmt->rowCount() > 0;
    }
 
-//    /**
-//     * @param Book $book
-//     * @return bool
-//     */
-//    public function addBook(Book $book): bool
-//   {
-//
-//   }
-
     /**
      * @param int $id
      * @param string $title

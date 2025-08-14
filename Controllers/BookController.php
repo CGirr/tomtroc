@@ -1,6 +1,6 @@
 <?php
 
-class BookController
+class BookController extends BaseController
 {
     /**
      * @var BookService $bookService
@@ -38,11 +38,13 @@ class BookController
 
         $action = Helpers::getParameter('action', 'home', 'get');
 
-        $view = new View('Détails du livre');
-        $view->render("singleBook", [
-            'action' => $action,
-            'book' => $book
-        ]);
+        $this->render(
+            "singleBook",
+            [
+                'action' => $action,
+                'book' => $book
+            ],
+            'Détails du livre');
     }
 
     /**
@@ -55,13 +57,13 @@ class BookController
 
         $action = Helpers::getParameter('action', 'home', 'get');
 
-        $view = new View('Tous nos livres');
-        $view->render(
+        $this->render(
             "allBooks",
             [
                 'action' => $action,
                 'books' => $books
-            ]
+            ],
+            'Tous nos livres'
         );
     }
 
@@ -112,9 +114,7 @@ class BookController
     public function renderEditBookForm(int $id, string $error = null, array $formData = null): void
     {
         $viewData = $this->bookService->prepareBookEditData($id, $formData, $error);
-
-        $view = new View('Modifier le livre');
-        $view->render("editBookForm", $viewData);
+        $this->render("editBookForm", $viewData, 'Modifier le livre');
     }
 
     /**

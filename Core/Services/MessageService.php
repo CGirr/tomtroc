@@ -43,7 +43,6 @@ class MessageService
     {
         $rows = $this->messageManager->findMessagesByConversationId($conversationId);
         $messages = [];
-        $userManager = ManagerFactory::getUserManager();
 
         foreach ($rows as $row) {
             $message = new Message($row);
@@ -58,20 +57,6 @@ class MessageService
         return $messages;
     }
 
-    public function getLastMessageByConversationId(int $conversationId): ?MessageModel
-    {
-        $rows = $this->messageManager->findMessagesByConversationId($conversationId);
-
-        if (!$rows) {
-            return null;
-        }
-
-        $message = new Message();
-        $message->hydrate($rows);
-
-        return new MessageModel($message);
-    }
-
     /**
      * @param int $conversationId
      * @param int $userId
@@ -80,5 +65,10 @@ class MessageService
     public function markMessagesAsRead(int $conversationId, int $userId): void
     {
         $this->messageManager->markMessagesAsRead($conversationId, $userId);
+    }
+
+    public function countUnreadMessages(int $userId): int
+    {
+        return $this->messageManager->countUnreadMessages($userId);
     }
 }

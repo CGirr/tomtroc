@@ -1,6 +1,6 @@
 <?php
 
-class HomeController
+class HomeController extends BaseController
 {
     /**
      * Displays home page
@@ -13,13 +13,13 @@ class HomeController
         $books = $booksManager->findLastAddedBooks();
 
         $action = Helpers::getParameter('action', 'home', 'get');
-        $view = new View('Home');
-        $view->render(
-            "home",
+        $this->render(
+            'home',
             [
                 'action' => $action,
                 'books' => $books
-            ]
+            ],
+            'Accueil'
         );
     }
 }

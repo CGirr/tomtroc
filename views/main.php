@@ -56,7 +56,12 @@
                         alt="Icône de messagerie"
                         class="i-message"
                     >
-                    Messagerie
+                    <div>Messagerie</div>
+                    <?php if (isset($unreadMessagesCount) && $unreadMessagesCount > 0): ?>
+                        <div class="unread-messages">
+                            <?= $unreadMessagesCount ?>
+                        </div>
+                    <?php endif; ?>
                 </a>
                 <a
                     href="index.php?action=account"

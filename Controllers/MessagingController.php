@@ -1,6 +1,6 @@
 <?php
 
-class MessagingController
+class MessagingController extends BaseController
 {
     /**
      * @var ConversationService
@@ -14,21 +14,20 @@ class MessagingController
 
     public function __construct()
     {
+        parent::__construct();
         $this->conversationService = new ConversationService();
         $this->messageService = new MessageService();
     }
 
     /**
-     * @param int $userId
      * @return void
      * @throws Exception
      */
     public function showMessagingPage(): void
    {
        Helpers::checkIfUserIsConnected();
-       $currentUserId = Helpers::getCurrentUserId();
 
-       $this->renderMessagingView($currentUserId);
+       $this->renderMessagingView($this->currentUserId);
    }
 
     /**
@@ -42,16 +41,18 @@ class MessagingController
 
        $params = [
            "conversations" => $conversations,
-           "currentUserId" => $currentUserId,
        ];
 
        if (isset($_GET['id'])) {
-           $messages = $this->messageService->getMessagesByConversationId($_GET['id'], $currentUserId);
+           $conversationId = $_GET['id'];
+
+           $this->messageService->markMessagesAsRead($conversationId, $currentUserId);
+
+           $messages = $this->messageService->getMessagesByConversationId($conversationId, $currentUserId);
            $params["messages"] = $messages;
        }
 
-       $view = new View('Messagerie');
-       $view->render('messaging', $params);
+       $this->render('messaging', $params, 'Messagerie');
    }
 
     /**
@@ -60,7 +61,7 @@ class MessagingController
     public function sendMessage()
     {
         $conversationId = (int)$_POST['conversation_id'];
-        $senderId = $_SESSION['user']['id'];
+        $senderId = $this->currentUserId;
         $content = trim($_POST['content']);
 
         if ($conversationId && $senderId && $content !== '') {

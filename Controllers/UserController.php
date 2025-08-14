@@ -3,7 +3,7 @@
 /**
  *
  */
-class UserController
+class UserController extends BaseController
 {
     /**
      * Displays the connection form
@@ -12,8 +12,7 @@ class UserController
     public function showConnectionForm() : void
     {
         $action = Helpers::getParameter('action', 'connectionForm', 'get');
-        $view = new View('Connexion');
-        $view->render("connectionForm", ["action" => $action]);
+        $this->render('connectionForm', ['action' => $action], 'Connexion');
     }
 
     /**
@@ -23,8 +22,7 @@ class UserController
      */
     public function showRegistrationForm() : void
     {
-        $view = new View('Inscription');
-        $view->render("registrationForm");
+        $this->render('registrationForm', [], 'Inscription');
     }
 
     /**
@@ -37,11 +35,14 @@ class UserController
         $accountData = UserService::getAccountData($id);
         $availableBooks = UserService::getUserAvailableBooks($id);
 
-        $view = new View('Page du vendeur');
-        $view->render("vendor", [
-            "accountData" => $accountData,
-            "availableBooks" => $availableBooks["availableBooks"],
-        ]);
+        $this->render(
+            'vendor',
+            [
+                'accountData' => $accountData,
+                'availableBooks' => $availableBooks['availableBooks']
+            ],
+            'Page du vendeur'
+        );
     }
 
     /**
@@ -89,9 +90,7 @@ class UserController
     private function renderAccountView(int $userId, string $error = null, array $formData = null) : void
     {
         $viewData = UserService::prepareAccountViewData($userId, $error, $formData);
-
-        $view = new View('Mon compte');
-        $view->render('myAccount', $viewData);
+        $this->render('myAccount', $viewData, 'Mon compte');
     }
 
     /**
@@ -116,14 +115,17 @@ class UserController
             }
         }
 
-        $view = new View("Inscription");
-        $view->render('registrationForm', [
-            'error' => $error,
-            'formData' => [
-                'login' => $_POST['login'] ?? '',
-                'email' => $_POST['email'] ?? '',
-            ]
-        ]);
+        $this->render(
+            'registrationForm',
+            [
+                'error' => $error,
+                'formData' => [
+                    'login' => $_POST['login'] ?? '',
+                    'email' => $_POST['email'] ?? '',
+                ],
+            ],
+            'Inscription'
+        );
     }
 
     /**
@@ -147,13 +149,13 @@ class UserController
             }
         }
 
-        $view = new View("Connexion");
-        $view->render(
+        $this->render(
             "connectionForm",
             [
                 'error' => $error,
                 'formData' => ['email' => $email ?? '', 'password' => '']
-            ]
+            ],
+            'Connexion',
         );
     }
 

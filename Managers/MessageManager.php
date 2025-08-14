@@ -50,4 +50,22 @@ class MessageManager extends AbstractEntityManager
             "user_id" => $userId
         ]);
     }
+
+    public function countUnreadMessages(int $userId): int
+    {
+        $sql = "SELECT COUNT(*)
+                FROM messages
+                WHERE conversation_id IN (
+                    SELECT id
+                    FROM conversations
+                    WHERE participant_one_id = :user_id
+                       OR participant_two_id = :user_id
+                )
+                AND sender_id != :user_id
+                AND is_read = 0";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(["user_id" => $userId]);
+        return $stmt->fetchColumn();
+    }
 }
