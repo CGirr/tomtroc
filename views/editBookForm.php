@@ -1,5 +1,5 @@
 <?php
-
+/** @var $book */
 ?>
 <div class="edit-book">
     <a class="light-grey-text" href="index.php?action=account">

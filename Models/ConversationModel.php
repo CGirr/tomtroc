@@ -25,16 +25,11 @@ class ConversationModel
      */
     private ?MessageModel $lastMessage;
 
-    /**
-     * @param Conversation $conversation
-     * @param string $otherParticipantName
-     * @param string $otherParticipantProfilePicture
-     */
     public function __construct(
-        Conversation $conversation,
-        string $otherParticipantName,
-        string $otherParticipantProfilePicture,
-        ?MessageModel $lastMessage
+        Conversation $conversation = null,
+        string $otherParticipantName = '',
+        string $otherParticipantProfilePicture = '',
+        ?MessageModel $lastMessage = null
     ) {
             $this->entity = $conversation;
             $this->otherParticipantName = $otherParticipantName;

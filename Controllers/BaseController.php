@@ -2,7 +2,13 @@
 
 abstract class BaseController
 {
+    /**
+     * @var int|null
+     */
     protected ?int $currentUserId = null;
+    /**
+     * @var int
+     */
     protected int $unreadMessagesCount = 0;
 
     public function __construct()
@@ -15,6 +21,9 @@ abstract class BaseController
         }
     }
 
+    /**
+     * @throws Exception
+     */
     protected function render(string $viewName, array $params = [], string $title = ''): void
     {
         $params["currentUserId"] = $this->currentUserId ?? null;

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @var $conversations
+ * @var $messages
+ * @var $conversation
+ */
 ?>
 
 <section class="messaging-container">
@@ -56,7 +60,13 @@
            </div>
            <?php endforeach; ?>
            <form class="message-form" method="post" action="index.php?action=sendMessage">
-               <input type="text" name="content" placeholder="Tapez votre message ici" class="light-grey-text inter-text">
+               <input
+                       type="text"
+                       name="content"
+                       aria-label="Message"
+                       placeholder="Tapez votre message ici"
+                       class="light-grey-text inter-text"
+               >
                <input type="hidden" name="conversation_id" value="<?= (int)$_GET['id'] ?>" >
                <button type="submit" class="green-button button-text">Envoyer</button>
            </form>

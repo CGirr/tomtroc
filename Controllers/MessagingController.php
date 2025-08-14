@@ -37,36 +37,50 @@ class MessagingController extends BaseController
      */
     public function renderMessagingView(int $currentUserId): void
    {
-       $conversations = $this->conversationService->getUserConversations($currentUserId);
-
        $params = [
-           "conversations" => $conversations,
+           "conversations" => $this->conversationService->getUserConversations($currentUserId),
        ];
 
-       if (isset($_GET['id'])) {
-           $conversationId = $_GET['id'];
+       $conversationId = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+       if ($conversationId !== null) {
+           $this->getConversationOrFail($conversationId, $currentUserId);
 
            $this->messageService->markMessagesAsRead($conversationId, $currentUserId);
 
-           $messages = $this->messageService->getMessagesByConversationId($conversationId, $currentUserId);
-           $params["messages"] = $messages;
+           $params["messages"] = $this->messageService->getMessagesByConversationId($conversationId, $currentUserId);
        }
 
        $this->render('messaging', $params, 'Messagerie');
    }
 
+   public function getConversationOrFail(int $conversationId, int $currentUserId): Conversation
+   {
+       $conversation = ManagerFactory::getConversationManager()->findConversationById($conversationId);
+
+       if (!$conversation) {
+           throw new Exception("Conversation introuvable", 404);
+       }
+
+       if (!$conversation->hasParticipant($currentUserId)) {
+           throw new Exception("Accès refusé à cette conversation", 403);
+       }
+
+       return $conversation;
+   }
+
     /**
      * @return void
      */
-    public function sendMessage()
+    public function sendMessage(): void
     {
-        $conversationId = (int)$_POST['conversation_id'];
-        $senderId = $this->currentUserId;
-        $content = trim($_POST['content']);
+        Helpers::checkIfUserIsConnected();
 
-        if ($conversationId && $senderId && $content !== '') {
-            $this->messageService->sendMessage($conversationId, $senderId, $content);
-        }
+        $conversationId = (int)$_POST['conversation_id'] ?? 0;
+        $senderId = $this->currentUserId;
+        $content = trim($_POST['content'] ?? '');
+
+        $this->messageService->sendMessage($conversationId, $senderId, $content);
 
         header('Location: index.php?action=messaging&id=' . $conversationId);
         exit;

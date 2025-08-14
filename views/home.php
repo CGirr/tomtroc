@@ -1,5 +1,5 @@
 <?php
-
+/** @var TYPE_NAME $books */
 ?>
 
 <section class="accueil">

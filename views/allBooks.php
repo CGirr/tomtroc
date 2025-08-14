@@ -1,4 +1,5 @@
 <?php
+/** @var $books */
 ?>
 <div class="all-books-container">
     <div class="search-field-container">
@@ -11,7 +12,8 @@
         >
     </div>
     <section class="book-card-container">
-        <?php foreach ($books as $book) : ?>
+        <?php
+        foreach ($books as $book) : ?>
             <article class="book-card">
                 <a href="index.php?action=singleBook&id=<?= (int)$book['id'] ?>">
                     <img

@@ -1,5 +1,5 @@
 <?php
-
+/** @var $book */
 ?>
 <span class="single-span small-text-10 weight-300 light-grey-text">
     Nos livres > <?= Helpers::sanitize($book['title']) ?>

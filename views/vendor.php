@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @var $accountData
+ * @var $availableBooks
+ */
 ?>
 <div class="public-account-container">
     <section class="vendor-info-block">

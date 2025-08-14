@@ -40,4 +40,20 @@ class ConversationManager extends AbstractEntityManager
 
         return $stmt->fetchAll();
     }
+
+    public function findConversationById(int $conversationId): ?Conversation
+    {
+        $sql = "SELECT * FROM conversations WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['id' => $conversationId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            return null;
+        }
+
+        $conversation = new Conversation();
+        $conversation->hydrate($row);
+        return $conversation;
+    }
 }

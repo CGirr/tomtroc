@@ -71,4 +71,9 @@ class Conversation extends AbstractEntity
         }
         $this->createdAt = $createdAt;
     }
+
+    public function hasParticipant(int $userId): bool
+    {
+        return $userId === $this->participantOneId || $userId === $this->participantTwoId;
+    }
 }

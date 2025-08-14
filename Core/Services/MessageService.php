@@ -23,9 +23,25 @@ class MessageService
      * @param int $senderId
      * @param string $content
      * @return bool
+     * @throws Exception
      */
     public function sendMessage(int $conversationId, int $senderId, string $content): bool
     {
+        $content = trim($content);
+        if ($content === '' || mb_strlen($content) > 1000) {
+            throw new Exception("Message invalide");
+        }
+
+        $conversation = ManagerFactory::getConversationManager()->findConversationById($conversationId);
+
+        if (!$conversation) {
+            throw new Exception("Conversation introuvable", 404);
+        }
+
+        if (!$conversation->hasParticipant($senderId)) {
+            throw new Exception("Accès refusé à cette conversation", 403);
+        }
+
         $message = new Message();
         $message->setConversationId($conversationId);
         $message->setSenderId($senderId);

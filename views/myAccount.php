@@ -1,5 +1,9 @@
 <?php
-
+/** @var $profilePicture
+ *  @var $login
+ *  @var $registeredSince
+ *  @var $numberOfBooks
+ */
 ?>
 <div class="account">
     <section class="my-account">
