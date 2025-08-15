@@ -121,7 +121,6 @@ class BookManager extends AbstractEntityManager
                 WHERE id = :id";
 
         $stmt = $this->db->prepare($sql);
-
         $success = $stmt->execute([
             'title' => $title,
             'author' => $author,
@@ -136,4 +135,38 @@ class BookManager extends AbstractEntityManager
 
         return $stmt->rowCount() > 0;
    }
+
+    /**
+     * @param string $title
+     * @param string $author
+     * @param string $description
+     * @param int $available
+     * @param string|null $coverUrl
+     * @return void
+     */
+    public function insertBook(
+        string $title,
+        string $author,
+        string $description,
+        int $available,
+        ?string $cover,
+        int $userId
+    ): void {
+        $sql = "
+        INSERT INTO books 
+            (title, author, description, available, cover, created_at, user_id)
+        VALUES 
+            (:title, :author, :description, :available, :cover, NOW(), :user_id)
+    ";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':title' => $title,
+            ':author' => $author,
+            ':description' => $description,
+            ':available' => $available,
+            ':cover' => $cover,
+            ':user_id' => $userId
+        ]);
+    }
 }

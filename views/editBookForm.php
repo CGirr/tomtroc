@@ -23,7 +23,7 @@
                         <?= Helpers::sanitize($error) ?>
                     </div>
                 <?php endif; ?>
-               <label for="title" class="inter-text light-grey-text">Titre</label>
+               <label for="title" aria-label="hidden">Titre</label>
                 <input
                     type="text"
                     name="title"

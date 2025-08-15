@@ -87,6 +87,17 @@ class BookController extends BaseController
     }
 
     /**
+     * @return void
+     * @throws Exception
+     */
+    public function showAddBookForm(): void
+    {
+        Helpers::checkIfUserIsConnected();
+
+        $this->render('addBookForm',[], 'Ajouter un livre');
+    }
+
+    /**
      * @param int $id
      * @return void
      * @throws Exception
@@ -131,5 +142,59 @@ class BookController extends BaseController
         $this->bookService->deleteBook($id);
 
         Helpers::redirect('account');
+    }
+
+    public function addBook(): void
+    {
+        Helpers::checkIfUserIsConnected();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->renderAddBookForm();
+            return;
+        }
+
+        $formData = $this->bookService->extractBookFormData();
+
+        try {
+            $requiredFields = ['title', 'author', 'description', 'available'];
+            foreach ($requiredFields as $field) {
+                if (!isset($formData[$field]) || $formData[$field] === '') {
+                    throw new Exception('Tous les champs sont obligatoires.');
+                }
+            }
+            $formData['user_id'] = Helpers::getCurrentUserId();
+            $this->bookService->addBook($formData);
+            header('Location: index.php?action=account');
+            exit();
+
+        } catch (Exception $e) {
+            $this->renderAddBookForm($e->getMessage(), $formData);
+        }
+    }
+
+    /**
+     * @param string|null $error
+     * @param array|null $formData
+     * @return void
+     * @throws Exception
+     */
+    public function renderAddBookForm(string $error = null, array $formData = null): void
+    {
+        $formData = $formData ?? [
+            'title' => '',
+            'author' => '',
+            'description' => '',
+            'available' => '1',
+        ];
+
+        $viewData = [
+            'book' => $formData,
+            'error' => $error,
+            'success' => $_SESSION['success'] ?? null,
+        ];
+
+        unset($_SESSION['success']);
+
+        $this->render('addBookForm', $viewData, 'Ajouter un livre');
     }
 }

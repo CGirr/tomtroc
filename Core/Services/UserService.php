@@ -133,8 +133,7 @@ class UserService
 
         return [
             'user' => $user,
-            'profilePicture' => $user->getProfilePicture(),
-            'login' => $user->getLogin(),
+            'id' => $user->getId(),
             'registeredSince' => $registeredSince,
             'numberOfBooks' => $bookManager->findNumberOfBooks($userId),
             'userBooks' => $bookManager->findBooksByUserId($userId)

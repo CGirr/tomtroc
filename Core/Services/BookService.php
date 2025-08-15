@@ -77,16 +77,63 @@ class BookService
     }
 
     /**
+     * @param array $formData
+     * @return void
+     * @throws Exception
+     */
+    public function addBook(array $formData): void
+    {
+        $this->validateFormData($formData, []);
+
+        $bookManager = ManagerFactory::getBookManager();
+        $bookManager->insertBook(
+            $formData['title'],
+            $formData['author'],
+            $formData['description'],
+            $formData['available'],
+            $formData['cover'] ?? null,
+            $formData['user_id']
+        );
+    }
+
+    /**
      * @return array
+     * @throws Exception
      */
     public function extractBookFormData(): array
     {
-        return [
+        $data = [
             'title' =>  trim(Helpers::getParameter('title', '', 'post')),
             'author' =>  trim(Helpers::getParameter('author', '', 'post')),
             'description' =>  trim(Helpers::getParameter('description', '', 'post')),
             'available' =>  Helpers::getParameter('available', '', 'post'),
+            'cover' => 'images/default-cover.svg'
         ];
+
+        if (isset($_FILES['cover']) && $_FILES['cover']['error'] === 0) {
+            $fileTmpPath = $_FILES['cover']['tmp_name'];
+            $fileName = $_FILES['cover']['name'];
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+            if (in_array($fileExtension, $allowedExtensions)) {
+                $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                $uploadDir = __DIR__ . '/../../public/uploads/';
+
+                if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+                $destPath = $uploadDir . $newFileName;
+                if (move_uploaded_file($fileTmpPath, $destPath)) {
+                    $data['cover'] = 'uploads/' . $newFileName;
+                } else {
+                    throw new Exception("Erreur lors de l'upload de l'image.");
+                }
+            } else {
+                throw new Exception("Type de fichier non autorisé. jpg, jpeg, png, gif seulement.");
+            }
+        }
+
+        return $data;
     }
 
     /**

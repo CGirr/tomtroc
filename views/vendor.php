@@ -8,12 +8,12 @@
     <section class="vendor-info-block">
         <img
                 class="vendor-profile-picture"
-                src="<?= Helpers::sanitizeUrl($accountData['profilePicture']) ?>"
-                alt="Image de profil de <?= Helpers::sanitize($accountData['login']) ?>"
+                src="<?= Helpers::sanitizeUrl($accountData['user']->getProfilePicture()) ?>"
+                alt="Image de profil de <?= Helpers::sanitize($accountData['user']->getLogin()) ?>"
         >
         <div class="line-250"></div>
         <h4>
-            <?= Helpers::sanitize($accountData['login']) ?>
+            <?= Helpers::sanitize($accountData['user']->getLogin()) ?>
         </h4>
         <div class="light-grey-text inter-text member-since">
             Membre depuis <?= Helpers::sanitize($accountData['registeredSince']) ?>
@@ -25,9 +25,12 @@
             <img src="./images/book-icon.png" alt="icône représentant un livre">
             <?= Helpers::sanitize($accountData['numberOfBooks']) ?> livres
         </div>
-        <button class="dark-grey-button button-text">
+        <a
+                href="index.php?action=startConversation&id=<?= $accountData['id'] ?>"
+                class="dark-grey-button button-text"
+        >
             Écrire un message
-        </button>
+        </a>
     </section>
     <section class="vendor-library-block">
         <table id="vendor-library">

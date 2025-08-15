@@ -1,32 +1,32 @@
 <?php
 /**
- * @var $conversations
- * @var $messages
- * @var $conversation
+ * @var $conversations ConversationModel[]
+ * @var $messages MessageModel[]
+ * @var $conversation ConversationModel|null
  */
 ?>
 
 <section class="messaging-container">
     <article class="conversations-container">
         <h3>Messagerie</h3>
-        <?php foreach ($conversations as $conversation): ?>
-            <a href="index.php?action=messaging&id=<?= $conversation->getId() ?>" class="conversations-cards-container">
+        <?php foreach ($conversations as $conv): ?>
+            <a href="index.php?action=messaging&id=<?= $conv->getId() ?>" class="conversations-cards-container">
                 <img
-                        src="<?= Helpers::sanitizeUrl($conversation->getOtherParticipantProfilePicture()) ?>"
+                        src="<?= Helpers::sanitizeUrl($conv->getOtherParticipantProfilePicture()) ?>"
                         alt="Photo de profil du correspondant"
                 >
                 <div class="conversation-info">
                     <div class="conversation-top">
                         <span class="inter-text conversation-name">
-                            <?= Helpers::sanitize($conversation->getOtherParticipantName()) ?>
+                            <?= Helpers::sanitize($conv->getOtherParticipantName()) ?>
                         </span>
                         <span class="medium-text conversation-date">
-                            <?= Helpers::sanitizeUrl($conversation->getFormattedCreatedAt()) ?>
+                            <?= Helpers::sanitizeUrl($conv->getFormattedCreatedAt()) ?>
                         </span>
                     </div>
                     <div class="medium-text light-grey-text conversation-last-message">
-                        <?php if ($conversation->getLastMessage()): ?>
-                            <?= Helpers::sanitize($conversation->getLastMessage()->getContent()) ?>
+                        <?php if ($conv->getLastMessage()): ?>
+                            <?= Helpers::sanitize($conv->getLastMessage()->getContent()) ?>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -66,6 +66,7 @@
                        aria-label="Message"
                        placeholder="Tapez votre message ici"
                        class="light-grey-text inter-text"
+                       required
                >
                <input type="hidden" name="conversation_id" value="<?= (int)$_GET['id'] ?>" >
                <button type="submit" class="green-button button-text">Envoyer</button>

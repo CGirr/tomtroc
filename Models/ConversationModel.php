@@ -46,6 +46,24 @@ class ConversationModel
     }
 
     /**
+     * @return Conversation
+     */
+    public function getEntity(): Conversation
+    {
+        return $this->entity;
+    }
+
+    /**
+     * @param int $userId
+     * @return bool
+     */
+    public function hasParticipant(int $userId): bool
+    {
+        return $this->entity->getParticipantOneId() === $userId
+            || $this->entity->getParticipantTwoId() === $userId;
+    }
+
+    /**
      * @return string
      */
     public function getOtherParticipantName(): string

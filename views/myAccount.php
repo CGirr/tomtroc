@@ -1,8 +1,8 @@
 <?php
-/** @var $profilePicture
- *  @var $login
- *  @var $registeredSince
- *  @var $numberOfBooks
+/**
+ * @var $user
+ * @var $registeredSince
+ * @var $numberOfBooks
  */
 ?>
 <div class="account">
@@ -12,12 +12,12 @@
             <article class="member-block-container">
                 <div>
                     <div class="profile-block">
-                        <img src="<?= Helpers::sanitizeUrl($profilePicture) ?>" alt="Photo de profil de l'utilisateur">
+                        <img src="<?= Helpers::sanitizeUrl($user->getProfilePicture()) ?>" alt="Photo de profil de l'utilisateur">
                         <a href="#" class="inter-text light-grey-text">modifier</a>
                     </div>
                     <div class="line-250"></div>
                     <div class="member-block">
-                        <h4><?= Helpers::sanitize($login) ?></h4>
+                        <h4><?= Helpers::sanitize($user->getLogin()) ?></h4>
                         <div class="light-grey-text member-block-years">
                             Membre depuis <?= Helpers::sanitize($registeredSince) ?>
                         </div>
@@ -121,5 +121,13 @@
                 </tbody>
             </table>
         <?php endif; ?>
+        <div class="add-book">
+            <a
+                    href="index.php?action=addBook"
+                    class="green-button button-text"
+            >
+                Ajouter un livre
+            </a>
+        </div>
     </section>
 </div>

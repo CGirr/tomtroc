@@ -24,6 +24,9 @@ class Router
             'vendor' => [UserController::class, 'showVendor'],
             'messaging' => [MessagingController::class, 'showMessagingPage'],
             'sendMessage' => [MessagingController::class, 'sendMessage'],
+            'startConversation' => [MessagingController::class, 'startConversation'],
+            'addBook' => [BookController::class, 'renderAddBookForm'],
+            'insertBook' => [BookController::class, 'addBook'],
         ];
     }
 

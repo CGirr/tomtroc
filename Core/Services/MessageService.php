@@ -29,7 +29,7 @@ class MessageService
     {
         $content = trim($content);
         if ($content === '' || mb_strlen($content) > 1000) {
-            throw new Exception("Message invalide");
+            throw new Exception("Message invalide", 400);
         }
 
         $conversation = ManagerFactory::getConversationManager()->findConversationById($conversationId);
@@ -83,6 +83,10 @@ class MessageService
         $this->messageManager->markMessagesAsRead($conversationId, $userId);
     }
 
+    /**
+     * @param int $userId
+     * @return int
+     */
     public function countUnreadMessages(int $userId): int
     {
         return $this->messageManager->countUnreadMessages($userId);

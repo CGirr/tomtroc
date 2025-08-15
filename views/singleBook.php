@@ -40,8 +40,11 @@
         </a>
 
 
-        <button class="green-button">
+        <a
+                href="index.php?action=startConversation&id=<?= $book['vendor_id'] ?>"
+                class="green-button button-text message-link"
+        >
             Envoyer un message
-        </button>
+        </a>
     </article>
 </section>

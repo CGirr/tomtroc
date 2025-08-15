@@ -39,38 +39,28 @@ class MessagingController extends BaseController
    {
        $params = [
            "conversations" => $this->conversationService->getUserConversations($currentUserId),
+           "conversation" => null,
+           "messages"
        ];
 
        $conversationId = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
        if ($conversationId !== null) {
-           $this->getConversationOrFail($conversationId, $currentUserId);
+           $conversation = $this->conversationService->getConversationOrFail($conversationId, $currentUserId);
+           $params["conversation"] = $conversation;
 
            $this->messageService->markMessagesAsRead($conversationId, $currentUserId);
-
            $params["messages"] = $this->messageService->getMessagesByConversationId($conversationId, $currentUserId);
        }
 
        $this->render('messaging', $params, 'Messagerie');
    }
 
-   public function getConversationOrFail(int $conversationId, int $currentUserId): Conversation
-   {
-       $conversation = ManagerFactory::getConversationManager()->findConversationById($conversationId);
 
-       if (!$conversation) {
-           throw new Exception("Conversation introuvable", 404);
-       }
-
-       if (!$conversation->hasParticipant($currentUserId)) {
-           throw new Exception("Accès refusé à cette conversation", 403);
-       }
-
-       return $conversation;
-   }
 
     /**
      * @return void
+     * @throws Exception
      */
     public function sendMessage(): void
     {
@@ -83,6 +73,23 @@ class MessagingController extends BaseController
         $this->messageService->sendMessage($conversationId, $senderId, $content);
 
         header('Location: index.php?action=messaging&id=' . $conversationId);
+        exit;
+    }
+
+    /**
+     * @return void
+     * @throws Exception
+     */
+    public function startConversation(): void
+    {
+        Helpers::checkIfUserIsConnected();
+
+        $sellerId = Helpers::getParameter('id', null, 'get');
+        $currentUserId = $this->currentUserId;
+
+        $conversation = $this->conversationService->startOrGetConversation($sellerId, $currentUserId);
+
+        header('Location: index.php?action=messaging&id=' . $conversation->getId());
         exit;
     }
 }
