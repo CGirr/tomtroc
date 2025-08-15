@@ -86,6 +86,7 @@ class BookManager extends AbstractEntityManager
         $sql = "SELECT b.*, u.login as vendor
                 FROM books b
                 INNER JOIN user u ON b.user_id = u.id
+                WHERE b.available = 1
                 ORDER BY created_at DESC 
                 LIMIT 4";
         $stmt = $this->db->prepare($sql);

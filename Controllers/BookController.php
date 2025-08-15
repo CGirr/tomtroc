@@ -144,6 +144,10 @@ class BookController extends BaseController
         Helpers::redirect('account');
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function addBook(): void
     {
         Helpers::checkIfUserIsConnected();
@@ -153,7 +157,14 @@ class BookController extends BaseController
             return;
         }
 
-        $formData = $this->bookService->extractBookFormData();
+        $formResult = $this->bookService->extractBookFormData();
+        $formData = $formResult['data'];
+        $error = $formResult['error'];
+
+        if (!empty($error)) {
+            $this->renderAddBookForm($error, $formData);
+            return;
+        }
 
         try {
             $requiredFields = ['title', 'author', 'description', 'available'];

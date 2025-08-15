@@ -96,9 +96,9 @@ class BookService
         );
     }
 
+
     /**
      * @return array
-     * @throws Exception
      */
     public function extractBookFormData(): array
     {
@@ -110,11 +110,13 @@ class BookService
             'cover' => 'images/default-cover.svg'
         ];
 
+        $error = null;
+
         if (isset($_FILES['cover']) && $_FILES['cover']['error'] === 0) {
             $fileTmpPath = $_FILES['cover']['tmp_name'];
             $fileName = $_FILES['cover']['name'];
             $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
 
             if (in_array($fileExtension, $allowedExtensions)) {
                 $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
@@ -126,14 +128,14 @@ class BookService
                 if (move_uploaded_file($fileTmpPath, $destPath)) {
                     $data['cover'] = 'uploads/' . $newFileName;
                 } else {
-                    throw new Exception("Erreur lors de l'upload de l'image.");
+                    $error = "Erreur lors de l'upload de l'image.";
                 }
             } else {
-                throw new Exception("Type de fichier non autorisé. jpg, jpeg, png, gif seulement.");
+                $error = "Type de fichier non autorisé. jpg, jpeg, et png uniquement.";
             }
         }
 
-        return $data;
+        return ['data' => $data, 'error' => $error];
     }
 
     /**
