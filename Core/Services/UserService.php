@@ -56,6 +56,10 @@ class UserService
     {
         $userManager = ManagerFactory::getUserManager();
 
+        if (empty($login) || empty($email) || empty($password)) {
+            throw new Exception("Tous les champs sont obligatoires");
+        }
+
         // Checks if login or email is already used
         if ($userManager->emailOrLoginExists($login, $email)) {
             throw new Exception("Ce login ou cet email est déjà utilisé");
