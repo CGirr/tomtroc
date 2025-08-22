@@ -56,10 +56,7 @@ class Router
             // Check if the method exists in the controller class
             if (!method_exists($controller, $method)) {
                 throw new Exception(
-                    "Méthode introuvable dans le controller : "
-                    . get_class($controller)
-                    . "::"
-                    . $method,
+                    "Erreur serveur",
                     500
                 );
             }
