@@ -33,35 +33,23 @@ class ConversationService
      */
     public function startOrGetConversation(int $sellerId, int $currentUserId): ConversationModel
     {
+        if ($sellerId === $currentUserId) {
+            throw new Exception('Impossible de démarrer une conversation avec soi-même.', 403);
+        }
+
         $conversationId = $this->conversationManager->startNewConversation($sellerId, $currentUserId);
+
+        $conversation = $this->conversationManager->findConversationById($conversationId);
+        if (!$conversation) {
+            throw new Exception('Conversation introuvable.', 404);
+        }
 
         $row = $this->conversationManager->getConversationWithNamesById($conversationId, $currentUserId);
         if (!$row) {
-            throw new Exception("Conversation introuvable", 404);
+            throw new Exception('Accès refusé à cette conversation.', 403);
         }
 
-        $conversation = $this->prepareConversationModel($row, $currentUserId);
-
-        $this->validateConversation($conversation, $currentUserId);
-
-        return $conversation;
-    }
-
-    /**
-     * @param ConversationModel|null $conversation
-     * @param int $currentUserId
-     * @return void
-     * @throws Exception
-     */
-    public function validateConversation(?ConversationModel $conversation, int $currentUserId): void
-    {
-        if (!$conversation) {
-            throw new Exception("Conversation introuvable", 404);
-        }
-
-        if (!$conversation->hasParticipant($currentUserId)) {
-            throw new Exception("Accès refusé à cette conversation", 403);
-        }
+       return $this->prepareConversationModel($row, $currentUserId);
     }
 
     /**
@@ -72,9 +60,14 @@ class ConversationService
      */
     public function getConversationOrFail(int $conversationId, int $currentUserId): ConversationModel
     {
+        $conversation = $this->conversationManager->findConversationById($conversationId);
+        if (!$conversation) {
+            throw new Exception("Conversation introuvable", 404);
+        }
+
         $row = $this->conversationManager->getConversationWithNamesById($conversationId, $currentUserId);
         if (!$row) {
-            throw new Exception("Conversation introuvable", 404);
+            throw new Exception("Accès refusé à cette conversation", 403);
         }
 
         return $this->prepareConversationModel($row, $currentUserId);

@@ -12,15 +12,15 @@
                 <?php endif; ?>
                 <div>
                     <label for="login" class="inter-text">Pseudo</label>
-                    <input type="text" name="login" id="login" class="inter-text">
+                    <input type="text" name="login" id="login" class="inter-text" required>
                 </div>
                 <div>
                     <label for="email" class="inter-text">Adresse email</label>
-                    <input type="email" name="email" id="email" class="inter-text">
+                    <input type="email" name="email" id="email" class="inter-text" required>
                 </div>
                 <div>
                     <label for="password" class="inter-text">Mot de passe</label>
-                    <input type="password" name="password" id="password" class="inter-text">
+                    <input type="password" name="password" id="password" class="inter-text" required>
                 </div>
                 <button class="submit green-button button-text">S'inscrire</button>
             </form>

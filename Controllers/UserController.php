@@ -1,12 +1,12 @@
 <?php
 
 /**
- *
+ * Controller responsible for user-related actions (authentication, registration...)
  */
 class UserController extends BaseController
 {
     /**
-     * Displays the connection form
+     * Displays the login form
      * @throws Exception
      */
     public function showConnectionForm() : void
@@ -26,11 +26,14 @@ class UserController extends BaseController
     }
 
     /**
+     * Displays a user's public profile with their available books
      * @return void
      * @throws Exception
      */
     public function showVendor() : void
     {
+        Helpers::checkIfUserIsConnected();
+
         $id = Helpers::getParameter('id', null, 'get');
         $accountData = UserService::getAccountData($id);
         $availableBooks = UserService::getUserAvailableBooks($id);
@@ -46,7 +49,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Displays personal account view
+     * Displays the current user's account page
      * @return void
      * @throws Exception
      */
@@ -64,6 +67,7 @@ class UserController extends BaseController
     }
 
     /**
+     * Handles account update form submission
      * @param int $userId
      * @return void
      * @throws Exception
@@ -81,6 +85,7 @@ class UserController extends BaseController
     }
 
     /**
+     * Renders the account view with user data, form data and optional errors
      * @param int $userId
      * @param string|null $error
      * @param array|null $formData
@@ -94,6 +99,7 @@ class UserController extends BaseController
     }
 
     /**
+     * Handles user registration (form submission + display)
      * @return void
      * @throws Exception
      */
@@ -129,6 +135,7 @@ class UserController extends BaseController
     }
 
     /**
+     * Handles user login (form submission + display)
      * @return void
      * @throws Exception
      */
@@ -160,6 +167,7 @@ class UserController extends BaseController
     }
 
     /**
+     * Logs out the current user
      * @return void
      */
     public function logoutUser() : void

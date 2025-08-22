@@ -22,7 +22,7 @@ class BookController extends BaseController
     {
         $id = Helpers::getParameter('id', null, $method);
         if ($id === null) {
-            throw new Exception("L'id du livre est manquant");
+            throw new Exception("L'id du livre est manquant", 404);
         }
 
         return $id;
@@ -36,7 +36,6 @@ class BookController extends BaseController
     {
         $id = $this->getBookId();
         $book = $this->bookService->getBookById($id);
-
         $action = Helpers::getParameter('action', 'home', 'get');
 
         $this->render(
@@ -55,7 +54,6 @@ class BookController extends BaseController
     public function showAllBooks(): void
     {
         $books = $this->bookService->getAllAvailableBooks();
-
         $action = Helpers::getParameter('action', 'home', 'get');
 
         $this->render(
@@ -76,25 +74,18 @@ class BookController extends BaseController
     {
         Helpers::checkIfUserIsConnected();
 
+        $id = $_SERVER['REQUEST_METHOD'] === 'POST'
+            ? Helpers::getParameter('id', null, 'post')
+            : $this->getBookId();
+
+        $this->bookService->getBookForUser($id, $this->currentUserId);
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = Helpers::getParameter('id', null, 'post');
-            $this->handleBookUpdate((int)$id);
+            $this->handleBookUpdate($id);
             return;
         }
 
-        $id = $this->getBookId();
         $this->renderEditBookForm($id);
-    }
-
-    /**
-     * @return void
-     * @throws Exception
-     */
-    public function showAddBookForm(): void
-    {
-        Helpers::checkIfUserIsConnected();
-
-        $this->render('addBookForm',[], 'Ajouter un livre');
     }
 
     /**
@@ -104,7 +95,8 @@ class BookController extends BaseController
      */
     public function handleBookUpdate(int $id): void
     {
-        $formData = $this->bookService->extractBookFormData();
+        $formResult = $this->bookService->extractBookFormData();
+        $formData = $formResult['data'];
 
         try {
             $this->bookService->updateBook($id, $formData);
@@ -138,7 +130,7 @@ class BookController extends BaseController
         Helpers::checkIfUserIsConnected();
 
         $id = $this->getBookId('post');
-
+        $this->bookService->getBookForUser($id, $this->currentUserId);
         $this->bookService->deleteBook($id);
 
         Helpers::redirect('account');
@@ -167,17 +159,10 @@ class BookController extends BaseController
         }
 
         try {
-            $requiredFields = ['title', 'author', 'description', 'available'];
-            foreach ($requiredFields as $field) {
-                if (!isset($formData[$field]) || $formData[$field] === '') {
-                    throw new Exception('Tous les champs sont obligatoires.');
-                }
-            }
             $formData['user_id'] = Helpers::getCurrentUserId();
             $this->bookService->addBook($formData);
             header('Location: index.php?action=account');
-            exit();
-
+            exit;
         } catch (Exception $e) {
             $this->renderAddBookForm($e->getMessage(), $formData);
         }

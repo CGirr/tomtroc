@@ -97,7 +97,7 @@ class ConversationManager extends AbstractEntityManager
     /**
      * @param int $sellerId
      * @param int $currentUserId
-     * @return bool
+     * @return int
      */
     public function startNewConversation(int $sellerId, int $currentUserId): int
     {

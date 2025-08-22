@@ -16,7 +16,24 @@ class BookService
         $book = $booksManager->findBookById($id);
 
         if ($book === null) {
-            throw new Exception("Livre introuvable.");
+            throw new Exception("Livre introuvable.", 404);
+        }
+
+        return $book;
+    }
+
+    /**
+     * @param int $id
+     * @param int $currentUserId
+     * @return array
+     * @throws Exception
+     */
+    public function getBookForUser(int $id, int $currentUserId): array
+    {
+        $book = $this->getBookById($id);
+
+        if ($book['user_id'] !== $currentUserId) {
+            throw new Exception("Accès refusé", 403);
         }
 
         return $book;
@@ -41,8 +58,10 @@ class BookService
     {
         $book = $this->getBookById($id);
 
+        $this->validateFormData($formData, $book);
+
         if ($book === null) {
-            throw new Exception("Livre introuvable.");
+            throw new Exception("Livre introuvable.", 404);
         }
 
         $this->validateFormData($formData, $book);
@@ -91,7 +110,7 @@ class BookService
             $formData['author'],
             $formData['description'],
             $formData['available'],
-            $formData['cover'] ?? null,
+            $formData['cover'] ?? 'images/default-cover.svg',
             $formData['user_id']
         );
     }
@@ -115,10 +134,18 @@ class BookService
         if (isset($_FILES['cover']) && $_FILES['cover']['error'] === 0) {
             $fileTmpPath = $_FILES['cover']['tmp_name'];
             $fileName = $_FILES['cover']['name'];
+            $fileSize = $_FILES['cover']['size'];
             $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $maxFileSize = 5 * 1024 * 1024;
 
-            if (in_array($fileExtension, $allowedExtensions)) {
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                $error = "Type de fichier non autorisé. jpg, jpeg, et png uniquement.";
+            } elseif (!getimagesize($fileTmpPath)) {
+                $error = "Le fichier n'est pas une image valide.";
+            } elseif ($fileSize > $maxFileSize) {
+                $error = "Fichier trop volumineux. Taille maximum 5MB.";
+            } else {
                 $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
                 $uploadDir = __DIR__ . '/../../public/uploads/';
 
@@ -130,8 +157,6 @@ class BookService
                 } else {
                     $error = "Erreur lors de l'upload de l'image.";
                 }
-            } else {
-                $error = "Type de fichier non autorisé. jpg, jpeg, et png uniquement.";
             }
         }
 
