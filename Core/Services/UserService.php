@@ -205,6 +205,7 @@ class UserService
      * @param string|null $error
      * @param array|null $formData
      * @return array
+     * @throws Exception
      */
     public static function prepareAccountViewData(int $userId, ?string $error = null, ?array $formData = null): array
     {
