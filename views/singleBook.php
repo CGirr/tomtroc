@@ -12,9 +12,9 @@
     >
     <article class="single-book-info">
         <h1><?= Helpers::sanitize($book['title']) ?></h1>
-        <h5 class="light-grey-text">
+        <h2 class="light-grey-text h5-style">
             par <?= Helpers::sanitize($book['author']) ?>
-        </h5>
+        </h2>
         <div class="line"></div>
 
         <span class="small-text">Description</span>

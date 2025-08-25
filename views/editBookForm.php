@@ -3,7 +3,7 @@
 ?>
 <div class="edit-book">
     <a class="light-grey-text" href="index.php?action=account">
-        <img src="./images/left-arrow.png" class="left-arrow" alt="flèche vers la gauche"/> retour
+        <img src="./images/left-arrow.png" class="left-arrow" alt="flèche vers la gauche"> retour
     </a>
     <h3>Modifier les information</h3>
     <section class="edit-book-container">

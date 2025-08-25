@@ -17,7 +17,6 @@
                         class="inter-text"
                         required
                         autocomplete="email"
-                        aria-describedby="emailHelp"
                 >
             </div>
 

@@ -4,11 +4,12 @@
 <div class="all-books-container">
     <div class="search-field-container">
         <h1>Nos livres à l'échange</h1>
-        <label for="bsearch"></label>
         <input
-            class="search-field"
-            type="search" id="bsearch"
-            placeholder="Rechercher un livre"
+                class="search-field"
+                type="search"
+                id="bsearch"
+                placeholder="Rechercher un livre"
+                aria-label="Rechercher un livre"
         >
     </div>
     <section class="book-card-container">
@@ -20,9 +21,9 @@
                         src="<?= Helpers::sanitizeUrl($book['cover']) ?>"
                         alt="Couverture du livre <?= Helpers::sanitize($book['title']) ?>"
                     >
-                    <h5>
+                    <h2 class="h5-style">
                         <?= Helpers::sanitize($book['title']) ?>
-                    </h5>
+                    </h2>
                     <div class="inter-text light-grey-text">
                         <?= Helpers::sanitize($book['author']) ?>
                     </div>

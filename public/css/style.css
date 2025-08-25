@@ -65,7 +65,7 @@ h4 {
     font-size: 24px;
 }
 
-h5 {
+h5, .h5-style {
     font-family: var(--font-base);
     font-size: 16px;
     font-weight: 400;
@@ -460,7 +460,7 @@ input.search-field {
     text-shadow: none;
 }
 
-.book-card h5,
+.book-card h2,
 .book-card div {
     padding-left: 14px;
 }
@@ -471,7 +471,7 @@ input.search-field {
     object-fit: cover;
 }
 
-.book-card h5 {
+.book-card h2 {
     padding-top: 20px;
     margin-bottom: 8px;
 }
@@ -515,7 +515,7 @@ input.search-field {
     margin-bottom: 16px;
 }
 
-.single-book-info h5 {
+.single-book-info h2 {
     margin-bottom: 33px;
 }
 

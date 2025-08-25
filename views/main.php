@@ -99,7 +99,7 @@
             <a href="#" class="dark-grey-text">Politique de confidentialité</a>
             <a href="#" class="dark-grey-text">Mentions légales</a>
             <span class="dark-grey-text">Tom Troc&copy;</span>
-            <img src="./images/tt.png" alt="logo TT" />
+            <img src="./images/tt.png" alt="logo TT">
         </div>
     </nav>
 </footer>
