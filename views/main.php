@@ -49,7 +49,10 @@
                 </a>
             </div>
             <div class="nav-block-2">
-                <a href="index.php?action=messaging" class="nav-link-2">
+                <a href="index.php?action=messaging"
+                    <?= ($action === 'messaging') ? 'aria-current="page"' : '' ?>
+                   class="nav-link-2"
+                >
                     <img
                         src="./images/message_icon.png"
                         alt="Icône de messagerie"

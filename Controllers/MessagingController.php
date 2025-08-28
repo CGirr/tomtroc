@@ -20,6 +20,7 @@ class MessagingController extends BaseController
     }
 
     /**
+     * Displays the messaging interface for the current user
      * @return void
      * @throws Exception
      */
@@ -31,6 +32,7 @@ class MessagingController extends BaseController
    }
 
     /**
+     * Prepares data and renders the messaging view
      * @param int $currentUserId
      * @return void
      * @throws Exception
@@ -59,6 +61,7 @@ class MessagingController extends BaseController
 
 
     /**
+     * Handles sending a new message in a conversation
      * @return void
      * @throws Exception
      */
@@ -77,6 +80,7 @@ class MessagingController extends BaseController
     }
 
     /**
+     * Starts a new conversation between the current user and another user
      * @return void
      * @throws Exception
      */

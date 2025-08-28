@@ -14,6 +14,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Retrieve the current book ID
      * @param string $method
      * @return int
      * @throws Exception
@@ -29,6 +30,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Displays book details
      * @return void
      * @throws Exception
      */
@@ -48,6 +50,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Displays all available books
      * @return void
      * @throws Exception
      */
@@ -67,6 +70,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Displays book edition form
      * @return void
      * @throws Exception
      */
@@ -89,6 +93,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Processes the submitted edit book form
      * @param int $id
      * @return void
      * @throws Exception
@@ -109,6 +114,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Renders the edit form with the current book’s data
      * @param int $id
      * @param string|null $error
      * @param array|null $formData
@@ -122,6 +128,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Deletes a book
      * @return void
      * @throws Exception
      */
@@ -137,6 +144,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Displays or processes the “add new book” form
      * @return void
      * @throws Exception
      */
@@ -169,6 +177,7 @@ class BookController extends BaseController
     }
 
     /**
+     * Displays the “add new book” form, optionally pre-filling data and showing messages.
      * @param string|null $error
      * @param array|null $formData
      * @return void

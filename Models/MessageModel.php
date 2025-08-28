@@ -76,6 +76,9 @@ class MessageModel
         return $this->entity->getSentAt();
     }
 
+    /**
+     * @return string
+     */
     public function getFormattedSentAt(): string
     {
         return $this->entity->getSentAt()->format('m.d H:i');

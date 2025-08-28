@@ -10,6 +10,7 @@ class ConversationService
     }
 
     /**
+     * Returns all conversations for a given user
      * @param int $userId
      * @return array
      */
@@ -26,6 +27,7 @@ class ConversationService
     }
 
     /**
+     * Starts a new conversation or retrieves an existing one between two users
      * @param int $sellerId
      * @param int $currentUserId
      * @return ConversationModel
@@ -53,6 +55,7 @@ class ConversationService
     }
 
     /**
+     * Fetches a single conversation for a user, ensuring it exists and belongs to them
      * @param int $conversationId
      * @param int $currentUserId
      * @return ConversationModel
@@ -73,6 +76,13 @@ class ConversationService
         return $this->prepareConversationModel($row, $currentUserId);
     }
 
+    /**
+     * Transforms a raw database row into a ConversationModel,
+     * including the other participant’s info and the last message
+     * @param array $row
+     * @param int $userId
+     * @return ConversationModel
+     */
     private function prepareConversationModel(array $row, int $userId): ConversationModel
     {
         $conversation = new Conversation();

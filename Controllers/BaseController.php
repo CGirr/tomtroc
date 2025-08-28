@@ -35,14 +35,18 @@ abstract class BaseController
     /**
      *  Renders a view with the provided parameters and page title.
      *
-     *  Automatically injects current user information (ID and unread messages count)
+     *  Automatically injects current user information (ID and unread messages count) and the action
      *  into the view parameters.
      * @throws Exception
      */
     protected function render(string $viewName, array $params = [], string $title = ''): void
     {
-        $params["currentUserId"] = $this->currentUserId ?? null;
+        $params['currentUserId'] = $this->currentUserId ?? null;
         $params['unreadMessagesCount'] = $this->unreadMessagesCount ?? 0;
+
+        if(!isset($params['action'])) {
+            $params['action'] = $_GET['action'] ?? null;
+        }
 
         $view = new View($title ?: $viewName);
         $view->render($viewName, $params);

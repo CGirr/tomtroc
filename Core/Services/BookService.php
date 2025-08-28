@@ -6,6 +6,7 @@
 class BookService
 {
     /**
+     * Finds a book by ID
      * @param int $id
      * @return array|null
      * @throws Exception
@@ -23,6 +24,7 @@ class BookService
     }
 
     /**
+     * Check if book belongs to the current user
      * @param int $id
      * @param int $currentUserId
      * @return array
@@ -40,6 +42,7 @@ class BookService
     }
 
     /**
+     * Returns all books that are marked as available
      * @return array
      */
     public function getAllAvailableBooks(): array
@@ -49,6 +52,7 @@ class BookService
     }
 
     /**
+     * Updates an existing book with new form data
      * @param int $id
      * @param array $formData
      * @return void
@@ -81,6 +85,7 @@ class BookService
     }
 
     /**
+     * Deletes a book from the database
      * @param int $id
      * @return void
      * @throws Exception
@@ -96,6 +101,7 @@ class BookService
     }
 
     /**
+     * Adds a new book to the database
      * @param array $formData
      * @return void
      * @throws Exception
@@ -117,6 +123,7 @@ class BookService
 
 
     /**
+     * Extracts and validates form data from a POST request, including file uploads
      * @return array
      */
     public function extractBookFormData(): array
@@ -164,6 +171,7 @@ class BookService
     }
 
     /**
+     * Prepares book data for the edit form view
      * @param int $id
      * @param array|null $formData
      * @param string|null $error
@@ -191,6 +199,7 @@ class BookService
     }
 
     /**
+     * Validates form input before adding or updating a book
      * @param array $formData
      * @param array $book
      * @return void

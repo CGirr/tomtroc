@@ -49,7 +49,7 @@
         let visibleCount = 0;
 
         books.forEach(book => {
-            const title = book.querySelector('h5').textContent.toLowerCase();
+            const title = book.querySelector('h2').textContent.toLowerCase();
             if (title.includes(query)) {
                 book.style.display = '';
                 visibleCount ++;

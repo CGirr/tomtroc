@@ -19,6 +19,7 @@ class MessageService
     }
 
     /**
+     * Sends a message in a specific conversation
      * @param int $conversationId
      * @param int $senderId
      * @param string $content
@@ -51,6 +52,7 @@ class MessageService
     }
 
     /**
+     * Retrieves all messages in a conversation and prepares them for the view
      * @param int $conversationId
      * @param int $currentUserId
      * @return array
@@ -74,6 +76,7 @@ class MessageService
     }
 
     /**
+     * Marks all messages in a conversation as read for a specific user
      * @param int $conversationId
      * @param int $userId
      * @return void
@@ -86,6 +89,7 @@ class MessageService
     /**
      * @param int $userId
      * @return int
+     * Counts the total number of unread messages for a user
      */
     public function countUnreadMessages(int $userId): int
     {
