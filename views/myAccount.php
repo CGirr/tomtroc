@@ -12,7 +12,10 @@
             <article class="member-block-container">
                 <div>
                     <div class="profile-block">
-                        <img src="<?= Helpers::sanitizeUrl($user->getProfilePicture()) ?>" alt="Photo de profil de l'utilisateur">
+                        <img
+                                src="<?= Helpers::sanitizeUrl($user->getProfilePicture()) ?>"
+                                alt="Photo de profil de l'utilisateur"
+                        >
                         <a href="#" class="inter-text light-grey-text">modifier</a>
                     </div>
                     <div class="line-250"></div>

@@ -61,6 +61,7 @@ class UserController extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->handleAccountUpdate($userId);
+            return;
         }
 
         $this->renderAccountView($userId);
