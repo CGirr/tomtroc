@@ -21,8 +21,8 @@ class BookController extends BaseController
      */
     private function getBookId(string $method = 'get'): int
     {
-        $id = Helpers::getParameter('id', null, $method);
-        if ($id === null) {
+        $id = (int) Helpers::getParameter('id', null, $method);
+        if ($id === 0) {
             throw new Exception("L'id du livre est manquant", 404);
         }
 
@@ -169,8 +169,7 @@ class BookController extends BaseController
         try {
             $formData['user_id'] = Helpers::getCurrentUserId();
             $this->bookService->addBook($formData);
-            header('Location: index.php?action=account');
-            exit;
+            Helpers::redirect('account');
         } catch (Exception $e) {
             $this->renderAddBookForm($e->getMessage(), $formData);
         }

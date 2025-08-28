@@ -8,10 +8,10 @@ class BookService
     /**
      * Finds a book by ID
      * @param int $id
-     * @return array|null
+     * @return array
      * @throws Exception
      */
-    public function getBookById(int $id): ?array
+    public function getBookById(int $id): array
     {
         $booksManager = ManagerFactory::getBookManager();
         $book = $booksManager->findBookById($id);
@@ -61,13 +61,6 @@ class BookService
     public function updateBook(int $id, array $formData): void
     {
         $book = $this->getBookById($id);
-
-        $this->validateFormData($formData, $book);
-
-        if ($book === null) {
-            throw new Exception("Livre introuvable.", 404);
-        }
-
         $this->validateFormData($formData, $book);
 
         $bookManager = ManagerFactory::getBookManager();
@@ -124,7 +117,7 @@ class BookService
 
     /**
      * Extracts and validates form data from a POST request, including file uploads
-     * @return array
+     * @return array{data: array, error: string|null}
      */
     public function extractBookFormData(): array
     {
@@ -132,7 +125,7 @@ class BookService
             'title' =>  trim(Helpers::getParameter('title', '', 'post')),
             'author' =>  trim(Helpers::getParameter('author', '', 'post')),
             'description' =>  trim(Helpers::getParameter('description', '', 'post')),
-            'available' =>  Helpers::getParameter('available', '', 'post'),
+            'available' =>  Helpers::getParameter('available', '1', 'post'),
             'cover' => 'images/default-cover.svg'
         ];
 
@@ -215,7 +208,7 @@ class BookService
             throw new Exception("Valeur invalide pour la disponibilité");
         }
 
-        if (
+        if (!empty($book) &&
             $formData['title'] === $book['title'] &&
             $formData['author'] === $book['author'] &&
             $formData['description'] === $book['description'] &&

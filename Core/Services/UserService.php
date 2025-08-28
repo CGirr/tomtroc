@@ -26,6 +26,8 @@ class UserService
 
         // Login successful, user is stored in session
         Helpers::startSession();
+        session_regenerate_id(true);
+
         $_SESSION['user'] = [
             'id' => $user->getId(),
             'login' => $user->getLogin(),
@@ -193,9 +195,9 @@ class UserService
     public static function extractAccountFormData(): array
     {
         return [
-            'login' => Helpers::getParameter('login', 'account', 'post'),
-            'email' => Helpers::getParameter('email', 'account', 'post'),
-            'password' => Helpers::getParameter('password', 'account', 'post'),
+            'login' => Helpers::getParameter('login', '', 'post'),
+            'email' => Helpers::getParameter('email', '', 'post'),
+            'password' => Helpers::getParameter('password', '', 'post'),
         ];
     }
 
@@ -214,8 +216,8 @@ class UserService
         // If no data provided, fill with current session values
         if ($formData === null) {
             $formData = [
-                'login' => $_SESSION['user']['login'],
-                'email' => $_SESSION['user']['email'],
+                'login' => $_SESSION['user']['login'] ?? '',
+                'email' => $_SESSION['user']['email'] ?? '',
                 'password' => ''
             ];
         }

@@ -32,8 +32,6 @@ class UserController extends BaseController
      */
     public function showVendor() : void
     {
-        Helpers::checkIfUserIsConnected();
-
         $id = Helpers::getParameter('id', null, 'get');
         $accountData = UserService::getAccountData($id);
         $availableBooks = UserService::getUserAvailableBooks($id);
@@ -127,8 +125,8 @@ class UserController extends BaseController
             [
                 'error' => $error,
                 'formData' => [
-                    'login' => $_POST['login'] ?? '',
-                    'email' => $_POST['email'] ?? '',
+                    'login' => Helpers::getParameter('login', '', 'post'),
+                    'email' => Helpers::getParameter('email', '', 'post'),
                 ],
             ],
             'Inscription'

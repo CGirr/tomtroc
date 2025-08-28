@@ -42,7 +42,7 @@ class MessagingController extends BaseController
        $params = [
            "conversations" => $this->conversationService->getUserConversations($currentUserId),
            "conversation" => null,
-           "messages"
+           "messages" => []
        ];
 
        $conversationId = isset($_GET['id']) ? (int)$_GET['id'] : null;
@@ -69,9 +69,9 @@ class MessagingController extends BaseController
     {
         Helpers::checkIfUserIsConnected();
 
-        $conversationId = (int)$_POST['conversation_id'] ?? 0;
+        $conversationId = (int)Helpers::getParameter('conversation_id', 0, 'post');
+        $content = trim(Helpers::getParameter('content', '', 'post'));
         $senderId = $this->currentUserId;
-        $content = trim($_POST['content'] ?? '');
 
         $this->messageService->sendMessage($conversationId, $senderId, $content);
 
